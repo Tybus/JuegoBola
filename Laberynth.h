@@ -29,7 +29,7 @@ public:
 private:
     uint8_t m_u8SizeX;
     uint8_t m_u8SizeY;
-    Square m_SMainBoard[256][256];
+    Square m_SMainBoard[5][5];
 };
 class Laberynth{
 public:

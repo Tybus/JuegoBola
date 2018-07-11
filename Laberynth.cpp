@@ -9,7 +9,53 @@
 #include <stdlib.h>
 #include <list>
 Maze::Maze(){
+    //Set the size variables
+    m_u8SizeX = 5;
+    m_u8SizeY = 5;
+    for(uint8_t l_u8IteratorX = 0; l_u8IteratorX < m_u8SizeX; l_u8IteratorX++){
+        for(uint8_t l_u8IteratorY = 0; l_u8IteratorY < m_u8SizeY; l_u8IteratorY++){
+            //Set the coordenate of the square.
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_u8XCoord = l_u8IteratorX;
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_u8YCoord = l_u8IteratorY;
 
+            //Set the adjacent squares //Array Out of bounds error to fix
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[0] =
+                    &m_SMainBoard[l_u8IteratorX - 1][l_u8IteratorY]; //Left Square
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[1] =
+                    &m_SMainBoard[l_u8IteratorX + 1][l_u8IteratorY]; //Right Square
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[2] =
+                    &m_SMainBoard[l_u8IteratorX][l_u8IteratorY - 1]; //Up Square
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[3] =
+                    &m_SMainBoard[l_u8IteratorX][l_u8IteratorY + 1]; //Down Square
+
+            //Create the new walls.
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = new bool(true);
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = new bool(true);
+            //Stablish adjacents
+            if(l_u8IteratorX == 0 ){
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall =  new bool(true);
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[0] =  NULL;
+            }
+            else {
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall =
+                        m_SMainBoard[l_u8IteratorX - 1][l_u8IteratorY].m_pRightWall;
+            }
+            if(l_u8IteratorY == 0 ){
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = new bool(true);
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[2] =  NULL;
+            }
+            else {
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall =
+                        m_SMainBoard[l_u8IteratorX][l_u8IteratorY - 1].m_pDownWall;
+            }
+            if(l_u8IteratorX == m_u8SizeX -1){
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[1] =  NULL;
+            }
+            if(l_u8IteratorY == m_u8SizeY -1){
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[3] =  NULL;
+            }
+        }
+    }
 }
 Maze::Maze(uint8_t i_u8SizeX, uint8_t i_u8SizeY){
     //Set the size variables
@@ -64,7 +110,6 @@ void Maze::resetMaze(void){
     for(uint8_t l_u8IteratorX = 0; l_u8IteratorX < m_u8SizeX;  l_u8IteratorX++){
         for(uint8_t l_u8IteratorY = 0; l_u8IteratorY < m_u8SizeY; l_u8IteratorY++){
 
-            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = true;
             *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = true;
             *m_SMainBoard[l_u8IteratorY][l_u8IteratorY].m_pLeftWall = true;
             *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = true;
@@ -74,13 +119,13 @@ void Maze::resetMaze(void){
     }
 }
 void Maze::primMaze(void){
-    uint16_t l_u16TotalSquares = m_u8SizeX*m_u8SizeY;
+    uint16_t l_u16TotalSquares =25;
     uint16_t l_u16InSquareAmm = 0;
     uint16_t l_u16FrontierSquareAmm = 0;
     uint8_t l_u8RandomX = rand()%m_u8SizeX; //%5
     uint8_t l_u8RandomY = rand()%m_u8SizeY;
-    Square * l_pInSquares[l_u16TotalSquares]; //x,y
-    Square * l_pFrontierSquares[l_u16TotalSquares]; //x,y
+    Square * l_pInSquares[25]; //x,y
+    Square * l_pFrontierSquares[25]; //x,y
 
 
     l_pInSquares[0] = &m_SMainBoard[l_u8RandomX][l_u8RandomY];
@@ -135,6 +180,7 @@ void Maze::primMaze(void){
 
             }
         }
+
         //Add a random adyacent to the In
         uint8_t l_u8Random = rand()%l_u16FrontierSquareAmm;
         l_pInSquares[l_u16InSquareAmm] = l_pFrontierSquares[l_u8Random];
@@ -145,22 +191,26 @@ void Maze::primMaze(void){
         l_pFrontierSquares[l_u8Random] = l_pFrontierSquares[l_u16FrontierSquareAmm -1];
         l_u16FrontierSquareAmm--;
 
-        //Delete the barriers after adding the new box
+        //Delete the barriers after adding the new box ->Here is the bug.
         uint8_t l_u8AdjacentsInsideAmm = 0;
         bool * l_pAdjacentsWalls[4];
-        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0]->m_bInside){ //The left one is also inside
+        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0]->m_bInside &&
+                l_pInSquares[l_u16InSquareAmm -1]->m_u8XCoord != 0 ){ //The left one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm] = l_pInSquares[l_u16InSquareAmm -1]->m_pLeftWall;
             l_u8AdjacentsInsideAmm++;
         }
-        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[1]->m_bInside){ //The Right one is also inside
+        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[1]->m_bInside &&
+                l_pInSquares[l_u16InSquareAmm -1]->m_u8XCoord != m_u8SizeX -1){ //The Right one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm] = l_pInSquares[l_u16InSquareAmm -1]->m_pRightWall;
             l_u8AdjacentsInsideAmm++;
         }
-        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[2]->m_bInside){ //The top one is also inside
+        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[2]->m_bInside &&
+                l_pInSquares[l_u16InSquareAmm -1]->m_u8YCoord != 0){ //The top one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm]  = l_pInSquares[l_u16InSquareAmm -1]->m_pUpWall;
             l_u8AdjacentsInsideAmm++;
         }
-        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3]->m_bInside){ //The Bottom one is also inside
+        if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3]->m_bInside &&
+                l_pInSquares[l_u16InSquareAmm -1]->m_u8YCoord != m_u8SizeY -1){ //The Bottom one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm]  = l_pInSquares[l_u16InSquareAmm -1]->m_pDownWall;
             l_u8AdjacentsInsideAmm++;
         }
@@ -169,7 +219,7 @@ void Maze::primMaze(void){
     }
 }
 Laberynth::Laberynth(){
-    m_Maze = Maze(5,5);
+    m_Maze = Maze();
     this->generateLaberynth();
 }
 void Laberynth::generateLaberynth(void){
