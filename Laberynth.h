@@ -7,6 +7,9 @@
 
 #ifndef LABERYNTH_H_
 #define LABERYNTH_H_
+
+#define __FORE_GROUND_COLOR 0x00FFFF00
+#define __BALL_COLOR 0x000000FF
 #define RCOLITION 0b000001
 #define LCOLITION 0b000010
 #define UCOLITION 0b000100
@@ -15,6 +18,10 @@
 #define QUANTUM   0b100000
 #include <stdint.h>
 #include <math.h>
+extern "C"{
+#include "LcdDriver/Crystalfontz128x128_ST7735.h"
+#include "LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h"
+}
 class Maze{
     struct Square{
         uint8_t m_u8XCoord;
@@ -35,13 +42,14 @@ public:
     void primMaze(void);
     void printMaze(void);
     uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY,uint8_t i_u8NextX,uint8_t i_u8NextY);
-
+    void drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_GContext);
 private:
     uint8_t m_u8SizeX;
     uint8_t m_u8SizeY;
     Square m_SMainBoard[5][5];
     uint8_t m_aHoles[127][2];
     uint8_t m_u8HoleAmmount;
+    uint8_t m_u8lvl;
 };
 
 class Laberynth{
@@ -50,6 +58,7 @@ public:
     virtual ~Laberynth();
     uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY,uint8_t i_u8NextX,uint8_t i_u8NextY);
     void printMaze();
+    void drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_GContext);
 private:
     void generateLaberynth(void);
     Maze m_Maze;

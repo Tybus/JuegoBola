@@ -3,8 +3,53 @@
 Laberynth.obj: ../Laberynth.cpp
 Laberynth.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/Laberynth.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h
-Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h
+Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/linkage.h
+Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h
+Laberynth.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/Crystalfontz128x128_ST7735.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/driverlib.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/adc14.h
+Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdbool.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp432p401r.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp_compatibility.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp432p401r_classic.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/third_party/CMSIS/Include/core_cm4.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/third_party/CMSIS/Include/cmsis_compiler.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/third_party/CMSIS/Include/cmsis_ccs.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/system_msp432p401r.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/aes256.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/comp_e.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/cpu.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/crc32.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/cs.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/dma.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/interrupt.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/eusci.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/fpu.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/gpio.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/i2c.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/mpu.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/pcm.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/pmap.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/pss.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/ref_a.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/reset.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/rom.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/rom_map.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/rtc_c.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/spi.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/systick.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/timer32.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/timer_a.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/uart.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/wdt_a.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/sysctl.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/flash.h
+Laberynth.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/grlib/grlib.h
+Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/assert.h
+Laberynth.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h
+Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/list
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__prolog.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__cprolog.h
@@ -29,7 +74,6 @@ Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__cmath.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
-Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/cpp_inline_math.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__pair.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s_type_traits.h
@@ -58,12 +102,58 @@ Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__relops_cont.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__epilog.h
 Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__config_compat_post.h
+Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
 
 ../Laberynth.cpp: 
 /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/Laberynth.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
-/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/linkage.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h: 
+/home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/Crystalfontz128x128_ST7735.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/driverlib.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/adc14.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdbool.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp432p401r.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp_compatibility.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp432p401r_classic.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/third_party/CMSIS/Include/core_cm4.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/third_party/CMSIS/Include/cmsis_compiler.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/third_party/CMSIS/Include/cmsis_ccs.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/system_msp432p401r.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/aes256.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/comp_e.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/cpu.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/crc32.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/cs.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/dma.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/interrupt.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/eusci.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/fpu.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/gpio.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/i2c.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/mpu.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/pcm.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/pmap.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/pss.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/ref_a.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/reset.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/rom.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/rom_map.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/rtc_c.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/spi.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/systick.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/timer32.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/timer_a.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/uart.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/wdt_a.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/sysctl.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/flash.h: 
+/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/grlib/grlib.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/assert.h: 
+/home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/list: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__prolog.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__cprolog.h: 
@@ -88,7 +178,6 @@ Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__cmath.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h: 
-/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/cpp_inline_math.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__pair.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s_type_traits.h: 
@@ -117,3 +206,4 @@ Laberynth.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__relops_cont.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__epilog.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/s__config_compat_post.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 

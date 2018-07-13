@@ -1,6 +1,6 @@
 # FIXED
 
-main.obj: ../main.c
+main.obj: ../main.cpp
 main.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp.h
 main.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp432p401r.h
 main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h
@@ -53,8 +53,11 @@ main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdi
 main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h
 main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
 main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h
+main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h
+main.obj: ../Laberynth.h
+main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
 
-../main.c: 
+../main.cpp: 
 /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp.h: 
 /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/inc/msp432p401r.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
@@ -107,3 +110,6 @@ main.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_def
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/_defs.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdlib.h: 
+../Laberynth.h: 
+/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h: 

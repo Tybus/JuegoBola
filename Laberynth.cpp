@@ -11,6 +11,7 @@
 #include <stdio.h>
 Maze::Maze(){
     //Set the size variables
+    m_u8lvl = 0;
     m_u8SizeX = 5;
     m_u8SizeY = 5;
     for(uint8_t l_u8IteratorX = 0; l_u8IteratorX < m_u8SizeX; l_u8IteratorX++){
@@ -346,6 +347,61 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
     }
     return l_u8ReturnValue;
 }
+void Maze::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
+
+    Graphics_setForegroundColor(i_pContext, __BALL_COLOR);
+    Graphics_Rectangle l_GraphicsRectangle;
+
+    //First draw the border.
+    l_GraphicsRectangle.xMin = 0;
+    l_GraphicsRectangle.xMax = 7;
+    l_GraphicsRectangle.yMin = 0;
+    l_GraphicsRectangle.yMax = 127;
+    Graphics_fillRectangle(i_pContext, &l_GraphicsRectangle);
+
+    l_GraphicsRectangle.xMin = 120;
+    l_GraphicsRectangle.xMax = 127;
+    l_GraphicsRectangle.yMin = 0;
+    l_GraphicsRectangle.yMax = 127;
+    Graphics_fillRectangle(i_pContext, &l_GraphicsRectangle);
+
+    l_GraphicsRectangle.xMin = 0;
+    l_GraphicsRectangle.xMax = 127;
+    l_GraphicsRectangle.yMin = 0;
+    l_GraphicsRectangle.yMax = 7;
+    Graphics_fillRectangle(i_pContext, &l_GraphicsRectangle);
+
+    l_GraphicsRectangle.xMin = 0;
+    l_GraphicsRectangle.xMax = 127;
+    l_GraphicsRectangle.yMin = 120;
+    l_GraphicsRectangle.yMax = 127;
+    Graphics_fillRectangle(i_pContext, &l_GraphicsRectangle);
+
+    //Then draw the maze
+
+    for(int i = 0; i<m_u8SizeX; i++){
+        for(int j = 0; j <m_u8SizeY; j++){
+            if(*m_SMainBoard[i][j].m_pRightWall){
+                l_GraphicsRectangle.xMin = 24*(i +1);
+                l_GraphicsRectangle.xMax = 24*(i +1) + 6;
+                l_GraphicsRectangle.yMin = 24*j;
+                l_GraphicsRectangle.yMax = 24*(j+1) + 6 ;
+                Graphics_fillRectangle(i_pContext, &l_GraphicsRectangle);
+
+            }
+            if(*m_SMainBoard[i][j].m_pDownWall){
+                l_GraphicsRectangle.yMin = 24*(j+1);
+                l_GraphicsRectangle.yMax = 24*(j+1) +6;
+                l_GraphicsRectangle.xMin = 24*i;
+                l_GraphicsRectangle.xMax = 24*(i+1) + 6;
+
+                Graphics_fillRectangle(i_pContext, &l_GraphicsRectangle);
+
+            }
+        }
+    }
+    //Then draw the circles.
+}
 void Laberynth::printMaze(){
     m_Maze.printMaze();
 
@@ -372,7 +428,9 @@ uint8_t Laberynth::checkColition(uint8_t i_u8CurrentX,
 
     return l_u8ReturnValue;
 }
-
+void Laberynth::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
+    m_Maze.drawLaberynth(i_iLaberynthColor, i_pContext);
+}
 Laberynth::~Laberynth()
 {
     // TODO Auto-generated destructor stub
