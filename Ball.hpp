@@ -9,6 +9,7 @@
 #define XY
 double x;
 double y;
+
 #endif
 
 extern "C"
@@ -35,26 +36,31 @@ class Ball
         Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth ,int i_iInitialX, int i_iInitialY);
         Ball(int i_iBallColor, Graphics_Context *context);
         Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context);
+        void RefreshPhysicalState(double i_dDeltaTime);
         void RefreshOnScreen(void);
         int m_iXPosition;
         int m_iYPosition;
-        //Accelerometer();
-        //uint16_t m_u16BITN;
-        //virtual uint8_t run(void);
-        //virtual uint8_t setup(void);
+        int m_iXAcceleration;
+        int m_iYAcceleration;
+
     protected:
     private:
         int m_iColor;
-        int m_iXNextPosition;
-        int m_iYNextPosition;
+        //double m_iXAcceleration;
+        //double m_iYAcceleration;
+        double m_dXSpeed = 0;
+        double m_dYSpeed = 0;
+        double m_iXNextPosition;
+        double m_iYNextPosition;
         int m_iXInitialPosition;
         int m_iYInitialPosition;
         Graphics_Context * m_pGraphicsContext;
         Laberynth * m_pLaberynth;
 
-        void Graphics_deleteCircle(Graphics_Context *context,int32_t currentx,int32_t currenty,
-                                                                   int32_t newX,int32_t newY,
-                                                                   int32_t lRadius);
+        void Graphics_deleteCircle(Graphics_Context *context,
+                                   int32_t currentx,int32_t currenty,
+                                   int32_t newX,    int32_t newY,
+                                   int32_t lRadius);
 
         int32_t isOnCircle(int32_t xtest, int32_t ytest, int32_t xNew, int32_t yNew );
 
