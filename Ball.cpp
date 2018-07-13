@@ -12,6 +12,8 @@ Ball::Ball(int i_iBallColor, Graphics_Context *context)
     m_iColor=i_iBallColor;
     m_iXPosition = 64;
     m_iYPosition = 64;
+    m_iXNextPosition = 64;
+    m_iYNextPosition = 64;
     m_iXInitialPosition = 64;
     m_iYInitialPosition = 64;
     m_pGraphicsContext = context;
@@ -22,6 +24,8 @@ Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context 
     m_iColor=i_iBallColor;
     m_iXPosition = i_iInitialX;
     m_iYPosition = i_iInitialY;
+    m_iXNextPosition = i_iInitialX;
+    m_iYNextPosition = i_iInitialY;
     m_iXInitialPosition = i_iInitialX;
     m_iYInitialPosition = i_iInitialY;
     m_pGraphicsContext = context;
@@ -32,6 +36,8 @@ Ball::Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth ,in
     m_iColor=i_iBallColor;
     m_iXPosition = i_iInitialX;
     m_iYPosition = i_iInitialY;
+    m_iXNextPosition = i_iInitialX;
+    m_iYNextPosition = i_iInitialY;
     m_iXInitialPosition = i_iInitialX;
     m_iYInitialPosition = i_iInitialY;
     m_pGraphicsContext = context;
@@ -42,7 +48,7 @@ Ball::Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth ,in
 
 int32_t Ball::isOnCircle(int32_t xtest, int32_t ytest, int32_t xNew, int32_t yNew )
 {
-    if( (xNew-xtest<3 && xtest-xNew<3)&& (yNew-ytest<3 && ytest-yNew<3)){return 1;}
+    if( (xNew-xtest<3 && xtest-xNew<3)&& (yNew-ytest<3 && ytest-yNew<3))                    {return 1;}
     if( ((xtest==xNew-3 || xtest==xNew+3 ) && (yNew==ytest||yNew+1==ytest||yNew-1==ytest)) ){return 1;}
     if( ((ytest==yNew-3 || ytest==yNew+3 ) && (xNew==xtest||xNew+1==xtest||xNew-1==xtest)) ){return 1;}
     return 0;
@@ -72,23 +78,31 @@ void Ball::Graphics_deleteCircle(Graphics_Context *context,int32_t currentx,int3
     }
 }
 
+void Ball::RefreshPhysicalState(double i_dDeltaTime)
+{
+    m_dXSpeed+=   m_iXAcceleration*i_dDeltaTime*0.1;//0.0010986;
+    m_dYSpeed+= - m_iYAcceleration*i_dDeltaTime*0.1;//0.0010986;
+    //m_dXSpeed+=   m_iXAcceleration*i_dDeltaTime*0.0297;//0.0010986;
+    //m_dYSpeed+= - m_iYAcceleration*i_dDeltaTime*0.0297;//0.0010986;
+    m_iXNextPosition+=  m_dXSpeed*i_dDeltaTime;//0.001;
+    m_iYNextPosition+=  m_dYSpeed*i_dDeltaTime;//0.001;
 
-
+}
 
 void Ball::RefreshOnScreen()
 {
-    __disable_irq();
-    m_iXNextPosition = (int) round(x)+m_iXInitialPosition;
-    m_iYNextPosition = (int) round(y)+m_iYInitialPosition;
-    __enable_irq();
+    //__disable_irq();
+    int l_iXNextPosition = (int) round(m_iXNextPosition);
+    int l_iYNextPosition = (int) round(m_iYNextPosition);
+    //__enable_irq();
 
     Graphics_deleteCircle(m_pGraphicsContext,
                           m_iXPosition, m_iYPosition ,
-                          m_iXNextPosition, m_iYNextPosition,
+                          l_iXNextPosition, l_iYNextPosition,
                           3);
 
     Graphics_setForegroundColor(m_pGraphicsContext, m_iColor);
-    Graphics_fillCircle(m_pGraphicsContext, m_iXNextPosition, m_iYNextPosition, 3);
-    m_iXPosition= m_iXNextPosition;
-    m_iYPosition= m_iYNextPosition;
+    Graphics_fillCircle(m_pGraphicsContext, l_iXNextPosition, l_iYNextPosition, 3);
+    m_iXPosition= l_iXNextPosition;
+    m_iYPosition= l_iYNextPosition;
 }
