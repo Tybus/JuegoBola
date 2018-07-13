@@ -26,16 +26,19 @@ public:
     Maze(uint8_t i_u8SizeX, uint8_t i_u8SizeY);
     void resetMaze(void);
     void primMaze(void);
+    void printMaze(void);
 private:
     uint8_t m_u8SizeX;
     uint8_t m_u8SizeY;
     Square m_SMainBoard[5][5];
 };
+
 class Laberynth{
 public:
     Laberynth();
     virtual ~Laberynth();
     uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY,uint8_t i_u8NextX,uint8_t i_u8NextY);
+    void printMaze();
 private:
     void generateLaberynth(void);
     Maze m_Maze;

@@ -8,6 +8,7 @@
 #include <Laberynth.h>
 #include <stdlib.h>
 #include <list>
+#include <stdio.h>
 Maze::Maze(){
     //Set the size variables
     m_u8SizeX = 5;
@@ -29,11 +30,12 @@ Maze::Maze(){
                     &m_SMainBoard[l_u8IteratorX][l_u8IteratorY + 1]; //Down Square
 
             //Create the new walls.
-            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = new bool(true);
-            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = new bool(true);
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = new bool(false);
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = new bool(false);
+
             //Stablish adjacents
             if(l_u8IteratorX == 0 ){
-                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall =  new bool(true);
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall =  new bool(false);
                 m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[0] =  NULL;
             }
             else {
@@ -41,7 +43,7 @@ Maze::Maze(){
                         m_SMainBoard[l_u8IteratorX - 1][l_u8IteratorY].m_pRightWall;
             }
             if(l_u8IteratorY == 0 ){
-                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = new bool(true);
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = new bool(false);
                 m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[2] =  NULL;
             }
             else {
@@ -50,9 +52,11 @@ Maze::Maze(){
             }
             if(l_u8IteratorX == m_u8SizeX -1){
                 m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[1] =  NULL;
+                *m_SMainBoard[l_u8IteratorX][l_u8IteratorY - 1].m_pRightWall = true;
             }
             if(l_u8IteratorY == m_u8SizeY -1){
                 m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[3] =  NULL;
+                *m_SMainBoard[l_u8IteratorX][l_u8IteratorY - 1].m_pDownWall = true;
             }
         }
     }
@@ -78,11 +82,11 @@ Maze::Maze(uint8_t i_u8SizeX, uint8_t i_u8SizeY){
                     &m_SMainBoard[l_u8IteratorX][l_u8IteratorY + 1]; //Down Square
 
             //Create the new walls.
-            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = new bool(true);
-            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = new bool(true);
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = new bool(false);
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = new bool(false);
 
             if(l_u8IteratorX == 0 ){
-                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall =  new bool(true);
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall =  new bool(false);
                 m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[0] =  NULL;
             }
             else {
@@ -90,7 +94,7 @@ Maze::Maze(uint8_t i_u8SizeX, uint8_t i_u8SizeY){
                         m_SMainBoard[l_u8IteratorX - 1][l_u8IteratorY].m_pRightWall;
             }
             if(l_u8IteratorY == 0 ){
-                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = new bool(true);
+                m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = new bool(false);
                 m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pAdjacents[2] =  NULL;
             }
             else {
@@ -107,15 +111,25 @@ Maze::Maze(uint8_t i_u8SizeX, uint8_t i_u8SizeY){
     }
 }
 void Maze::resetMaze(void){
+
     for(uint8_t l_u8IteratorX = 0; l_u8IteratorX < m_u8SizeX;  l_u8IteratorX++){
         for(uint8_t l_u8IteratorY = 0; l_u8IteratorY < m_u8SizeY; l_u8IteratorY++){
 
-            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = true;
-            *m_SMainBoard[l_u8IteratorY][l_u8IteratorY].m_pLeftWall = true;
-            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = true;
-            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = true;
+            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pRightWall = false;
+            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pLeftWall = false;
+            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pUpWall = false;
+            *m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_pDownWall = false;
+            m_SMainBoard[l_u8IteratorX][l_u8IteratorY].m_bInside = false;
 
         }
+    }
+    for(uint8_t l_u8IteratorX = 0; l_u8IteratorX < m_u8SizeX;  l_u8IteratorX++){
+        *m_SMainBoard[l_u8IteratorX][0].m_pUpWall = true;
+        *m_SMainBoard[l_u8IteratorX][m_u8SizeY -1].m_pDownWall = true;
+    }
+    for(uint8_t l_u8IteratorY = 0; l_u8IteratorY < m_u8SizeY;  l_u8IteratorY++){
+        *m_SMainBoard[0][l_u8IteratorY].m_pLeftWall = true;
+        *m_SMainBoard[m_u8SizeX -1][l_u8IteratorY].m_pRightWall = true;
     }
 }
 void Maze::primMaze(void){
@@ -131,10 +145,17 @@ void Maze::primMaze(void){
     l_pInSquares[0] = &m_SMainBoard[l_u8RandomX][l_u8RandomY];
     l_pInSquares[0]->m_bInside = true;
     l_u16InSquareAmm++;
+    printf("Current In Squeares: \n");
+    for(int i = 0; i< l_u16InSquareAmm ; i++){
+        printf("( %d, %d)", l_pInSquares[i]->m_u8XCoord, l_pInSquares[i]->m_u8YCoord);
+    }
+    printf("\n Printing maze progress: \n");
+    printMaze();
 
     while(l_u16InSquareAmm < l_u16TotalSquares ){
         Square * l_pFrontiersToCheck[4];
         uint8_t l_u8FrontierAppendAmm = 0;
+        //Check the frontiers
         if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8XCoord != 0){ //Just the left one
             l_pFrontiersToCheck[l_u8FrontierAppendAmm] =
                     l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0];
@@ -153,7 +174,7 @@ void Maze::primMaze(void){
         if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8YCoord != m_u8SizeY -1){ //Just the bottom one
             l_pFrontiersToCheck[l_u8FrontierAppendAmm] =
                      l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3];
-            l_u8FrontierAppendAmm++;
+            l_u8FrontierAppendAmm++; //the adjacents are not correctly located.
         }
 
         for(int i = 0;  i< l_u8FrontierAppendAmm ; i++){
@@ -194,36 +215,84 @@ void Maze::primMaze(void){
         //Delete the barriers after adding the new box ->Here is the bug.
         uint8_t l_u8AdjacentsInsideAmm = 0;
         bool * l_pAdjacentsWalls[4];
+        printf("Left Adjacent: (%d,%d)\n",
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0]->m_u8XCoord,
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0]->m_u8YCoord);
+
         if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0]->m_bInside &&
                 l_pInSquares[l_u16InSquareAmm -1]->m_u8XCoord != 0 ){ //The left one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm] = l_pInSquares[l_u16InSquareAmm -1]->m_pLeftWall;
             l_u8AdjacentsInsideAmm++;
+            printf("Left is inside");
         }
+        printf("Right Adjacent: (%d,%d)\n",
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[1]->m_u8XCoord,
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[1]->m_u8YCoord);
         if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[1]->m_bInside &&
                 l_pInSquares[l_u16InSquareAmm -1]->m_u8XCoord != m_u8SizeX -1){ //The Right one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm] = l_pInSquares[l_u16InSquareAmm -1]->m_pRightWall;
             l_u8AdjacentsInsideAmm++;
+            printf("Right is inside");
         }
+        printf("Up Adjacent: (%d,%d)\n",
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[2]->m_u8XCoord,
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[2]->m_u8YCoord);
         if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[2]->m_bInside &&
                 l_pInSquares[l_u16InSquareAmm -1]->m_u8YCoord != 0){ //The top one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm]  = l_pInSquares[l_u16InSquareAmm -1]->m_pUpWall;
             l_u8AdjacentsInsideAmm++;
+            printf("Up is inside");
         }
+        printf("Down Adjacent: (%d,%d)\n",
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3]->m_u8XCoord,
+               l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3]->m_u8YCoord);
         if(l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3]->m_bInside &&
                 l_pInSquares[l_u16InSquareAmm -1]->m_u8YCoord != m_u8SizeY -1){ //The Bottom one is also inside
             l_pAdjacentsWalls[l_u8AdjacentsInsideAmm]  = l_pInSquares[l_u16InSquareAmm -1]->m_pDownWall;
             l_u8AdjacentsInsideAmm++;
+            printf("Down is inside");
         }
-        l_u8Random = rand()%l_u8AdjacentsInsideAmm;
-        *l_pAdjacentsWalls[l_u8Random] = false;
+        if(l_u8AdjacentsInsideAmm > 1 ){
+            l_u8Random = rand()%l_u8AdjacentsInsideAmm;
+            *l_pAdjacentsWalls[l_u8Random] = true;
+        }
+        printf("Current In Squeares: \n");
+        for(int i = 0; i< l_u16InSquareAmm ; i++){
+            printf("( %d, %d)", l_pInSquares[i]->m_u8XCoord, l_pInSquares[i]->m_u8YCoord);
+        }
+        printf("\n Printing maze progress: \n");
+        printMaze();
     }
 }
+void Maze::printMaze(){
+    printf("\n _ _ _ _ _\n");
+
+    for(int j = 0 ; j< 5 ; j++){
+        printf("|");
+        for(int i = 0 ; i< 5; i++){
+            if(*m_SMainBoard[i][j].m_pDownWall == true)
+                printf("_");
+            else
+                printf(" ");
+            if(*m_SMainBoard[i][j].m_pRightWall == true)
+                printf("|");
+            else
+                printf(" ");
+        }
+        printf("\n");
+    }
+}
+void Laberynth::printMaze(){
+    m_Maze.printMaze();
+
+}
 Laberynth::Laberynth(){
-    m_Maze = Maze();
     this->generateLaberynth();
 }
 void Laberynth::generateLaberynth(void){
     m_Maze.resetMaze();
+    printf("Reset Maze: \n");
+    m_Maze.printMaze();
     m_Maze.primMaze();
 }
 Laberynth::~Laberynth()
