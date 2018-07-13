@@ -7,7 +7,14 @@
 
 #ifndef LABERYNTH_H_
 #define LABERYNTH_H_
+#define RCOLITION 0b000001
+#define LCOLITION 0b000010
+#define UCOLITION 0b000100
+#define DCOLITION 0b001000
+#define HOLE      0b010000
+#define QUANTUM   0b100000
 #include <stdint.h>
+#include <math.h>
 class Maze{
     struct Square{
         uint8_t m_u8XCoord;
@@ -27,10 +34,14 @@ public:
     void resetMaze(void);
     void primMaze(void);
     void printMaze(void);
+    uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY,uint8_t i_u8NextX,uint8_t i_u8NextY);
+
 private:
     uint8_t m_u8SizeX;
     uint8_t m_u8SizeY;
     Square m_SMainBoard[5][5];
+    uint8_t m_aHoles[127][2];
+    uint8_t m_u8HoleAmmount;
 };
 
 class Laberynth{

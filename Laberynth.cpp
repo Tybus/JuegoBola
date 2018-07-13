@@ -282,6 +282,70 @@ void Maze::printMaze(){
         printf("\n");
     }
 }
+uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
+                                 uint8_t i_u8CurrentY,
+                                 uint8_t i_u8NextX,
+                                 uint8_t i_u8NextY){
+    uint8_t l_u8XSquare, l_u8YSquare;
+    uint8_t l_u8MaxX, l_u8MinX, l_u8MaxY, l_u8MinY;
+    uint8_t l_u8ReturnValue = 0;
+    int16_t l_u8XDistance = 0;
+    int16_t l_u8YDistance = 0;
+    Square *l_pCurrentSquare;
+    //X and Y Should be greater than or equal to 8.
+    l_u8XSquare = (i_u8CurrentX -8) / 24; //Whole values.
+    l_u8YSquare = (i_u8CurrentY -8) / 24;
+    //Set the max values:
+    l_u8MaxX = i_u8CurrentX + 3;
+    l_u8MinX = i_u8CurrentX - 3;
+    l_u8MaxY = i_u8CurrentY + 3;
+    l_u8MinY = i_u8CurrentY - 3;
+    //load the Square location
+    l_pCurrentSquare = &m_SMainBoard[l_u8XSquare][l_u8YSquare];
+
+    if(l_u8MinX <= 7 + l_u8XSquare*24){ //If the ball is stuck in the left wall.
+        if(*l_pCurrentSquare->m_pLeftWall)
+            l_u8ReturnValue |= LCOLITION;
+    }
+    else if(l_u8MaxX >= (l_u8XSquare + 1 )*24){
+        if(*l_pCurrentSquare->m_pRightWall)
+            l_u8ReturnValue |= RCOLITION;
+    }
+
+    if(l_u8MinY <= 7 + l_u8YSquare*24){ //If the ball is stuck in the left wall.
+        if(*l_pCurrentSquare->m_pUpWall)
+            l_u8ReturnValue |= UCOLITION;
+    }
+    else if(l_u8MaxY >= (l_u8YSquare + 1 )*24){
+        if(*l_pCurrentSquare->m_pDownWall)
+            l_u8ReturnValue |= DCOLITION;
+    }
+    //Detect if quantum jump TBD.
+    if(l_u8ReturnValue != 0 &&
+            ((i_u8CurrentX - i_u8NextX != 1 ||
+                    i_u8CurrentX - i_u8NextX != -1) ||
+                    (i_u8CurrentY - i_u8NextY != 1 ||
+                            i_u8CurrentY - i_u8NextY != -1))){
+        l_u8ReturnValue |= QUANTUM;
+    }
+
+    //Hole TBD.
+    for(int i = 0; i< m_u8HoleAmmount; i++){
+        l_u8XDistance = i_u8CurrentX - m_aHoles[i][0];
+        l_u8YDistance = i_u8CurrentY - m_aHoles[i][1];
+
+        l_u8XDistance = abs(l_u8XDistance);
+
+        l_u8YDistance = abs(l_u8YDistance);
+
+        if(l_u8XDistance <= 3 && l_u8YDistance <= 3){
+            if(sqrt(l_u8XDistance*l_u8XDistance + l_u8YDistance*l_u8YDistance) <= 3 )
+                l_u8ReturnValue |= HOLE;
+        }
+
+    }
+    return l_u8ReturnValue;
+}
 void Laberynth::printMaze(){
     m_Maze.printMaze();
 
@@ -295,6 +359,20 @@ void Laberynth::generateLaberynth(void){
     m_Maze.printMaze();
     m_Maze.primMaze();
 }
+uint8_t Laberynth::checkColition(uint8_t i_u8CurrentX,
+                                 uint8_t i_u8CurrentY,
+                                 uint8_t i_u8NextX,
+                                 uint8_t i_u8NextY){
+    uint8_t l_u8ReturnValue;
+    l_u8ReturnValue = m_Maze.checkColition(i_u8CurrentX,
+                                 i_u8CurrentY,
+                                 i_u8NextX,
+                                 i_u8NextY);
+
+
+    return l_u8ReturnValue;
+}
+
 Laberynth::~Laberynth()
 {
     // TODO Auto-generated destructor stub
