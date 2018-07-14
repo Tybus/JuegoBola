@@ -32,7 +32,7 @@ extern "C"
 class Ball
 {
     public:
-        //Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth);
+        Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context, Laberynth *laberynth);
         Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth ,int i_iInitialX, int i_iInitialY);
         Ball(int i_iBallColor, Graphics_Context *context);
         Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context);
@@ -69,3 +69,4 @@ class Ball
 };
 
 #endif /* BALL_HPP_ */
+
