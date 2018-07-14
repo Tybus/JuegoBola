@@ -5,7 +5,7 @@
  *      Author: gab
  */
 
-#include "Ball.hpp"
+#include <Ball.hpp>
 
 Ball::Ball(int i_iBallColor, Graphics_Context *context)
 {
@@ -29,6 +29,19 @@ Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context 
     m_iXInitialPosition = i_iInitialX;
     m_iYInitialPosition = i_iInitialY;
     m_pGraphicsContext = context;
+}
+
+Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context, Laberynth *laberynth)
+{
+    m_iColor=i_iBallColor;
+    m_iXPosition = i_iInitialX;
+    m_iYPosition = i_iInitialY;
+    m_iXNextPosition = i_iInitialX;
+    m_iYNextPosition = i_iInitialY;
+    m_iXInitialPosition = i_iInitialX;
+    m_iYInitialPosition = i_iInitialY;
+    m_pGraphicsContext = context;
+    m_pLaberynth = laberynth;
 }
 
 Ball::Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth ,int i_iInitialX, int i_iInitialY)
@@ -92,9 +105,29 @@ void Ball::RefreshPhysicalState(double i_dDeltaTime)
 void Ball::RefreshOnScreen()
 {
     //__disable_irq();
-    int l_iXNextPosition = (int) round(m_iXNextPosition);
-    int l_iYNextPosition = (int) round(m_iYNextPosition);
+    //int l_iXNextPosition = (int) round(m_iXNextPosition);
+    //int l_iYNextPosition = (int) round(m_iYNextPosition);
+
+    uint8_t l_iXNextPosition = (uint8_t) round(m_iXNextPosition);
+    uint8_t l_iYNextPosition = (uint8_t) round(m_iYNextPosition);
+    uint8_t l_iXCurrentPosition = (uint8_t) round(m_iXPosition);
+    uint8_t l_iYCurrentPosition = (uint8_t) round(m_iXPosition);
     //__enable_irq();
+
+    uint8_t i;
+    i =  m_pLaberynth->checkColition(l_iXCurrentPosition, l_iYCurrentPosition, l_iXNextPosition, l_iYNextPosition);
+/*
+    if(i & RCOLITION){m_dXSpeed = -0.2*m_dXSpeed;}
+    if(i & LCOLITION){m_dXSpeed = -0.2*m_dXSpeed;}
+    if(i & UCOLITION){m_dYSpeed = -0.2*m_dYSpeed;}
+    if(i & DCOLITION){m_dYSpeed = -0.2*m_dYSpeed;}
+*/
+    if(i & RCOLITION){m_dXSpeed = 0;}
+    if(i & LCOLITION){m_dXSpeed = 0;}
+    if(i & UCOLITION){m_dYSpeed = 0;}
+    if(i & DCOLITION){m_dYSpeed = 0;}
+
+
 
     Graphics_deleteCircle(m_pGraphicsContext,
                           m_iXPosition, m_iYPosition ,
@@ -106,3 +139,4 @@ void Ball::RefreshOnScreen()
     m_iXPosition= l_iXNextPosition;
     m_iYPosition= l_iYNextPosition;
 }
+
