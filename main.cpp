@@ -1,4 +1,5 @@
-extern"C"{
+extern "C"
+{
 #include <ti/devices/msp432p4xx/inc/msp.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/grlib/grlib.h>
@@ -7,13 +8,15 @@ extern"C"{
 #include "LcdDriver/Crystalfontz128x128_ST7735.h"
 #include "LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h"
 }
+
 #include <stdio.h>
 #include <math.h>
-#include <stdlib.h>
-#include "Laberynth.h"
+#include <Ball.hpp>
+#include <Laberynth.h>
 
 #define __FORE_GROUND_COLOR 0x00FFFF00
-#define __BALL_COLOR 0x000000FF
+#define __BALL_COLOR        0x000000FF
+
 /* Graphic library context */
 Graphics_Context g_sContext;
 Graphics_Rectangle g_sRectangle;
@@ -33,6 +36,19 @@ void Setup(void)
     // - This is the heart beat indicator.
     P1->DIR |= BIT0; //Red LED
 
+    // ****************************
+    //       TIMER CONFIG
+    // ****************************
+    // - Configure Timer32_1  with MCLK (3Mhz), Division by 1, Enable the interrupt, Periodic Mode
+    // - Enable the interrupt in the NVIC
+    // - Start the timer in UP mode.
+    // - Re-enable interrupts
+    //TIMER32_1->LOAD = 0x002DC6C0;//TIMER32_COUNT; //~1ms ---> a 48Mhz
+    TIMER32_1->LOAD = 0x0000BB80;//TIMER32_COUNT;
+    TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_PRESCALE_0 | TIMER32_CONTROL_MODE | TIMER32_CONTROL_IE | TIMER32_CONTROL_ENABLE;
+    NVIC_SetPriority(T32_INT1_IRQn,1);
+    NVIC_EnableIRQ(T32_INT1_IRQn);
+    __enable_irq();
 
     // ****************************
     //       TIMER CONFIG
@@ -67,8 +83,6 @@ void Setup(void)
     g_sRectangle.yMax = 0; g_sRectangle.yMin = 127;
     Graphics_fillRectangle(&g_sContext,&g_sRectangle);
 
-<<<<<<< HEAD
-=======
     //Graphics_clearDisplay(&g_sContext);
     // ****************************
     //     ACCELEROMETER CONFIG
@@ -104,17 +118,15 @@ void Setup(void)
     NVIC_SetPriority(ADC14_IRQn,1);
     NVIC_EnableIRQ(ADC14_IRQn);
 
->>>>>>> a2f3f928513512f89283050355191191f5c8c341
     return;
 }
 /////////////////////////
 /////////////////////////
 /////////////////////////
-<<<<<<< HEAD
-=======
 
-Ball ball(__BALL_COLOR ,&g_sContext);
->>>>>>> a2f3f928513512f89283050355191191f5c8c341
+Laberynth MyLaberynth;
+//Ball ball(__BALL_COLOR ,&g_sContext);
+Ball ball(__BALL_COLOR , 64, 64 ,&g_sContext, &MyLaberynth);
 
 /*
  * Main function
@@ -122,14 +134,7 @@ Ball ball(__BALL_COLOR ,&g_sContext);
 int main(void)
 {
     Setup();
-<<<<<<< HEAD
-    Laberynth MyLaberynth;
     MyLaberynth.drawLaberynth(__BALL_COLOR, &g_sContext);
-    while(1){
-
-    }
-}
-=======
 
     while(1)
     {
@@ -156,8 +161,10 @@ void T32_INT1_IRQHandler(void)
     __disable_irq();
     TIMER32_1->INTCLR = 0U;
     //P1->OUT ^= BIT0; // - Toggle the heart beat indicator (1ms)
+
     ADC14->CTL0 = ADC14->CTL0 | ADC14_CTL0_SC;
     ball.RefreshPhysicalState(0.001);
+
     __enable_irq();
     return;
 }
@@ -170,4 +177,3 @@ void T32_INT2_IRQHandler(void)
 }
 
 }
->>>>>>> a2f3f928513512f89283050355191191f5c8c341
