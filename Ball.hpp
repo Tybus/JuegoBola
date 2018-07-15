@@ -38,6 +38,7 @@ class Ball
         Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context);
         void RefreshPhysicalState(double i_dDeltaTime);
         void RefreshOnScreen(void);
+        void ResetBall(void);
         int m_iXPosition;
         int m_iYPosition;
         int m_iXAcceleration;
