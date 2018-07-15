@@ -93,41 +93,154 @@ void Ball::Graphics_deleteCircle(Graphics_Context *context,int32_t currentx,int3
 
 void Ball::RefreshPhysicalState(double i_dDeltaTime)
 {
-    m_dXSpeed+=   m_iXAcceleration*i_dDeltaTime*0.1;//0.0010986;
-    m_dYSpeed+= - m_iYAcceleration*i_dDeltaTime*0.1;//0.0010986;
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    //uint8_t i;
+    uint8_t i =  m_pLaberynth->checkColition((uint8_t) round(m_iXPosition),(uint8_t) round(m_iYPosition));
+
+    m_RightWall = (bool) (i & RCOLITION);
+    m_LeftWall  = (bool) (i & LCOLITION);
+    m_DownWall  = (bool) (i & DCOLITION);
+    m_UpWall    = (bool) (i & UCOLITION);
+
+    //if(i & RCOLITION){m_dXSpeed = -0.2*m_dXSpeed;}
+    //if(i & LCOLITION){m_dXSpeed = -0.2*m_dXSpeed;}
+    //if(i & UCOLITION){m_dYSpeed = -0.2*m_dYSpeed;}
+    //if(i & DCOLITION){m_dYSpeed = -0.2*m_dYSpeed;}
+
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
+    /*
+    if(m_iXPosition >=123 ){m_RightWall = true; }
+    if(m_iXPosition <123 ) {m_RightWall = false; }
+
+    if(m_iXPosition <=4 )  {m_LeftWall = true; }
+    if(m_iXPosition >4 )   {m_LeftWall = false; }
+
+    if(m_iYPosition >=123 ){m_DownWall = true; }
+    if(m_iYPosition <123 ) {m_DownWall = false; }
+
+    if(m_iYPosition <=4 )  {m_UpWall = true; }
+    if(m_iYPosition >4 )   {m_UpWall = false; }
+    */
+    //m_dXSpeed+=   m_iXAcceleration*i_dDeltaTime*0.1;//0.0010986;
+    //m_dYSpeed+= - m_iYAcceleration*i_dDeltaTime*0.1;//0.0010986;
+    if(!( (m_LeftWall  && m_iXAcceleration<0 ) || (m_RightWall && m_iXAcceleration>0 )  ))
+    {
+        m_dXSpeed+=   m_iXAcceleration*i_dDeltaTime*0.1;
+    }
+    if(!( (m_UpWall  && m_iYAcceleration>0 ) || (m_DownWall && m_iYAcceleration<0 )  ))
+    {
+        m_dYSpeed+= - m_iYAcceleration*i_dDeltaTime*0.1;
+    }
+
+    m_iXNextPosition+=  m_dXSpeed*i_dDeltaTime;
+    m_iYNextPosition+=  m_dYSpeed*i_dDeltaTime;
+
+    if((m_iXNextPosition > m_iXPosition && m_RightWall)
+            ||
+       (m_iXNextPosition < m_iXPosition && m_LeftWall))
+    {
+        m_iXNextPosition =  (double) m_iXPosition;
+        m_dXSpeed = -m_dXSpeed;
+    }
+
+    if((m_iYNextPosition > m_iYPosition && m_DownWall)
+            ||
+       (m_iYNextPosition < m_iYPosition && m_UpWall))
+    {
+        m_iYNextPosition = (double) m_iYPosition;
+        m_dYSpeed = -m_dYSpeed;
+    }
+
+
+/*
+    if(m_iXNextPosition >123 || m_iXNextPosition < 4 )
+    {
+        m_iXNextPosition = m_iXPosition;
+        m_dXSpeed = -m_dXSpeed;
+    }
+
+    if(!(m_iXNextPosition >123 || m_iXNextPosition < 4) ){m_iXNextPosition+=  m_dXSpeed*i_dDeltaTime;}//0.001;}
+
+    if(m_iYNextPosition >123 || m_iYNextPosition < 4 )
+    {
+        m_iYNextPosition = m_iYPosition;
+        m_dYSpeed = -m_dYSpeed;
+    }
+
+    if(!(m_iYNextPosition >123 || m_iYNextPosition < 4) ){m_iYNextPosition+=  m_dYSpeed*i_dDeltaTime;}//0.001;}
+
+    if(!( (m_LeftWall  && m_dXSpeed<0 ) || (m_RightWall && m_dXSpeed>0 )  ))
+    {
+        m_iXNextPosition+=  m_dXSpeed*i_dDeltaTime;//0.001;
+    }//0.0010986; }
+    if(!( (m_UpWall  && m_dYSpeed<0 ) || (m_DownWall && m_dYSpeed>0 )  ))
+    {
+        m_iYNextPosition+=  m_dYSpeed*i_dDeltaTime;//0.001;
+    }
+
     //m_dXSpeed+=   m_iXAcceleration*i_dDeltaTime*0.0297;//0.0010986;
     //m_dYSpeed+= - m_iYAcceleration*i_dDeltaTime*0.0297;//0.0010986;
-    m_iXNextPosition+=  m_dXSpeed*i_dDeltaTime;//0.001;
-    m_iYNextPosition+=  m_dYSpeed*i_dDeltaTime;//0.001;
 
+    //m_iXNextPosition+=  m_dXSpeed*i_dDeltaTime;//0.001;
+    //m_iYNextPosition+=  m_dYSpeed*i_dDeltaTime;//0.001;
+*/
 }
 
 void Ball::RefreshOnScreen()
 {
     //__disable_irq();
-    //int l_iXNextPosition = (int) round(m_iXNextPosition);
-    //int l_iYNextPosition = (int) round(m_iYNextPosition);
+    int l_iXNextPosition = (int) round(m_iXNextPosition);
+    int l_iYNextPosition = (int) round(m_iYNextPosition);
 
-    uint8_t l_iXNextPosition = (uint8_t) round(m_iXNextPosition);
-    uint8_t l_iYNextPosition = (uint8_t) round(m_iYNextPosition);
-    uint8_t l_iXCurrentPosition = (uint8_t) round(m_iXPosition);
-    uint8_t l_iYCurrentPosition = (uint8_t) round(m_iXPosition);
+    //uint8_t l_iXNextPosition = (uint8_t) round(m_iXNextPosition);
+    //uint8_t l_iYNextPosition = (uint8_t) round(m_iYNextPosition);
+    //uint8_t l_iXCurrentPosition = (uint8_t) round(m_iXPosition);
+    //uint8_t l_iYCurrentPosition = (uint8_t) round(m_iXPosition);
     //__enable_irq();
 
-    uint8_t i;
-    i =  m_pLaberynth->checkColition(l_iXCurrentPosition, l_iYCurrentPosition, l_iXNextPosition, l_iYNextPosition);
+    //uint8_t i;
+    //i =  m_pLaberynth->checkColition((uint8_t) round(m_iXPosition),(uint8_t) round(m_iYPosition),(uint8_t) l_iXNextPosition,(uint8_t) l_iYNextPosition);
 /*
     if(i & RCOLITION){m_dXSpeed = -0.2*m_dXSpeed;}
     if(i & LCOLITION){m_dXSpeed = -0.2*m_dXSpeed;}
     if(i & UCOLITION){m_dYSpeed = -0.2*m_dYSpeed;}
     if(i & DCOLITION){m_dYSpeed = -0.2*m_dYSpeed;}
 */
+    /*
     if(i & RCOLITION){m_dXSpeed = 0;}
     if(i & LCOLITION){m_dXSpeed = 0;}
     if(i & UCOLITION){m_dYSpeed = 0;}
     if(i & DCOLITION){m_dYSpeed = 0;}
+*/
+    /*
+    if(m_iXPosition >=123 ){m_RightWall = true; }
+    if(m_iXPosition <123 ) {m_RightWall = false; }
 
+    if(m_iXPosition <=4 )  {m_LeftWall = true; }
+    if(m_iXPosition >4 )   {m_LeftWall = false; }
 
+    if(m_iYPosition >=123 ){m_DownWall = true; }
+    if(m_iYPosition <123 ) {m_DownWall = false; }
+
+    if(m_iYPosition <=4 )  {m_UpWall = true; }
+    if(m_iYPosition >4 )   {m_UpWall = false; }
+*/
+    /*
+    if(l_iXNextPosition >123 || l_iXNextPosition < 4 )
+    {
+        l_iXNextPosition = m_iXPosition;
+        m_dXSpeed = -m_dXSpeed;
+    }
+    if(l_iYNextPosition >123 || l_iYNextPosition < 4 )
+    {
+        l_iYNextPosition = m_iYPosition;
+        m_dYSpeed = -m_dYSpeed;
+    }
+*/
 
     Graphics_deleteCircle(m_pGraphicsContext,
                           m_iXPosition, m_iYPosition ,
@@ -138,5 +251,5 @@ void Ball::RefreshOnScreen()
     Graphics_fillCircle(m_pGraphicsContext, l_iXNextPosition, l_iYNextPosition, 3);
     m_iXPosition= l_iXNextPosition;
     m_iYPosition= l_iYNextPosition;
-}
 
+}
