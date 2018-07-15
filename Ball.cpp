@@ -67,6 +67,16 @@ int32_t Ball::isOnCircle(int32_t xtest, int32_t ytest, int32_t xNew, int32_t yNe
     return 0;
 }
 
+void Ball::ResetBall()
+{
+    m_dXSpeed = 0;
+    m_dYSpeed = 0;
+    //m_iXPosition = 64;
+    //m_iYPosition = 64;
+    m_iXNextPosition = 64;
+    m_iYNextPosition = 64;
+}
+
 void Ball::Graphics_deleteCircle(Graphics_Context *context,int32_t currentx,int32_t currenty,
                                                            int32_t newX,int32_t newY,
                                                            int32_t lRadius)
