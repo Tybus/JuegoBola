@@ -16,6 +16,12 @@
 #define DCOLITION 0b001000
 #define HOLE      0b010000
 #define QUANTUM   0b100000
+
+#define RWALL     0b000001
+#define LWALL     0b000010
+#define UWALL     0b000100
+#define DWALL     0b001000
+
 #include <stdint.h>
 #include <math.h>
 extern "C"{
@@ -41,9 +47,11 @@ public:
     void resetMaze(void);
     void primMaze(void);
     void printMaze(void);
-    uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY,uint8_t i_u8NextX,uint8_t i_u8NextY);
+    uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY);
     void drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_GContext);
 private:
+    void coordToSqueare(uint8_t i_u8XCoord, uint8_t i_u8YCoord, uint8_t * o_pRetCoord);
+    void WallToCoord(uint8_t i_u8XSquare, uint8_t i_u8YSquare, uint8_t i_u8Wall ,uint8_t *o_pRetCoord);
     uint8_t m_u8SizeX;
     uint8_t m_u8SizeY;
     Square m_SMainBoard[5][5];
@@ -56,7 +64,7 @@ class Laberynth{
 public:
     Laberynth();
     virtual ~Laberynth();
-    uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY,uint8_t i_u8NextX,uint8_t i_u8NextY);
+    uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY);
     void printMaze();
     void drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_GContext);
 private:

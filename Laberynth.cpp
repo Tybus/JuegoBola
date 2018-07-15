@@ -1,7 +1,7 @@
 /*
  * Laberynth.cpp
  *
- *  Created on: Jul 3, 2018
+ *  Created on: jul 3, 2018
  *      Author: david
  */
 
@@ -157,22 +157,22 @@ void Maze::primMaze(void){
         Square * l_pFrontiersToCheck[4];
         uint8_t l_u8FrontierAppendAmm = 0;
         //Check the frontiers
-        if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8XCoord != 0){ //Just the left one
+        if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8XCoord != 0){ //just the left one
             l_pFrontiersToCheck[l_u8FrontierAppendAmm] =
                     l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[0];
             l_u8FrontierAppendAmm++;
         }
-        if(l_pInSquares[l_u16InSquareAmm -1]->m_u8XCoord != m_u8SizeX -1 ){ // Just the right one
+        if(l_pInSquares[l_u16InSquareAmm -1]->m_u8XCoord != m_u8SizeX -1 ){ // just the right one
             l_pFrontiersToCheck[l_u8FrontierAppendAmm] =
                     l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[1];
             l_u8FrontierAppendAmm++;
         }
-        if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8YCoord != 0){ //Just the top one
+        if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8YCoord != 0){ //just the top one
             l_pFrontiersToCheck[l_u8FrontierAppendAmm] =
                      l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[2];
             l_u8FrontierAppendAmm++;
         }
-        if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8YCoord != m_u8SizeY -1){ //Just the bottom one
+        if(l_pInSquares[l_u16InSquareAmm -1 ]->m_u8YCoord != m_u8SizeY -1){ //just the bottom one
             l_pFrontiersToCheck[l_u8FrontierAppendAmm] =
                      l_pInSquares[l_u16InSquareAmm -1]->m_pAdjacents[3];
             l_u8FrontierAppendAmm++; //the adjacents are not correctly located.
@@ -264,6 +264,8 @@ void Maze::primMaze(void){
         printf("\n Printing maze progress: \n");
         printMaze();
     }
+    //Generate holes.
+
 }
 void Maze::printMaze(){
     printf("\n _ _ _ _ _\n");
@@ -284,52 +286,91 @@ void Maze::printMaze(){
     }
 }
 uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
-                                 uint8_t i_u8CurrentY,
-                                 uint8_t i_u8NextX,
-                                 uint8_t i_u8NextY){
-    uint8_t l_u8XSquare, l_u8YSquare;
-    uint8_t l_u8MaxX, l_u8MinX, l_u8MaxY, l_u8MinY;
+                                 uint8_t i_u8CurrentY){
+
+    uint8_t l_aSquare[2];
     uint8_t l_u8ReturnValue = 0;
+    uint8_t l_aSquareCoord[4];
     int16_t l_u8XDistance = 0;
     int16_t l_u8YDistance = 0;
+
     Square *l_pCurrentSquare;
     //X and Y Should be greater than or equal to 8.
-    l_u8XSquare = (i_u8CurrentX -8) / 24; //Whole values.
-    l_u8YSquare = (i_u8CurrentY -8) / 24;
+    coordToSqueare(i_u8CurrentX, i_u8CurrentY, l_aSquare);
     //Set the max values:
-    l_u8MaxX = i_u8CurrentX + 3;
-    l_u8MinX = i_u8CurrentX - 3;
-    l_u8MaxY = i_u8CurrentY + 3;
-    l_u8MinY = i_u8CurrentY - 3;
+
     //load the Square location
-    l_pCurrentSquare = &m_SMainBoard[l_u8XSquare][l_u8YSquare];
+    l_pCurrentSquare = &m_SMainBoard[l_aSquare[0]][l_aSquare[1]];
 
-    if(l_u8MinX <= 7 + l_u8XSquare*24){ //If the ball is stuck in the left wall.
-        if(*l_pCurrentSquare->m_pLeftWall)
-            l_u8ReturnValue |= LCOLITION;
+    /* Left Walls */
+    if(l_pCurrentSquare->m_pLeftWall){
+        WallToCoord(l_aSquare[0],l_aSquare[1],0, l_aSquareCoord);
+        if(l_aSquareCoord[1] + 5 == i_u8CurrentX)
+            l_u8ReturnValue |= LWALL;
     }
-    else if(l_u8MaxX >= (l_u8XSquare + 1 )*24){
-        if(*l_pCurrentSquare->m_pRightWall)
-            l_u8ReturnValue |= RCOLITION;
+    if(m_SMainBoard[l_aSquare[0] - 1][l_aSquare[1]].m_pUpWall){
+        WallToCoord(l_aSquare[0] -1 ,l_aSquare[1] ,2, l_aSquareCoord);
+        if(i_u8CurrentY -5 <= l_aSquareCoord[3] && i_u8CurrentX +5 == l_aSquareCoord[1])
+            l_u8ReturnValue |= LWALL;
+
+    }
+    if(m_SMainBoard[l_aSquare[0] - 1][l_aSquare[1]].m_pDownWall){
+        WallToCoord(l_aSquare[0] -1 ,l_aSquare[1] ,3, l_aSquareCoord);
+        if(i_u8CurrentY + 5 >= l_aSquareCoord[2] && i_u8CurrentX +5 == l_aSquareCoord[1])
+            l_u8ReturnValue |= LWALL;
+    }
+    /* Right Walls*/
+    if(l_pCurrentSquare->m_pRightWall){
+        WallToCoord(l_aSquare[0],l_aSquare[1],1, l_aSquareCoord);
+        if(l_aSquareCoord[0] - 5 == i_u8CurrentX)
+            l_u8ReturnValue |= RWALL;
+    }
+    if(m_SMainBoard[l_aSquare[0] +1][l_aSquare[1]].m_pUpWall){
+        WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,2, l_aSquareCoord);
+        if(i_u8CurrentY -5 <= l_aSquareCoord[3] && i_u8CurrentX - 5 == l_aSquareCoord[0])
+            l_u8ReturnValue |= RWALL;
+
+    }
+    if(m_SMainBoard[l_aSquare[0] + 1][l_aSquare[1]].m_pDownWall){
+        WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,3, l_aSquareCoord);
+        if(i_u8CurrentY +5 >= l_aSquareCoord[2] && i_u8CurrentX - 5 == l_aSquareCoord[0])
+            l_u8ReturnValue |= RWALL;
     }
 
-    if(l_u8MinY <= 7 + l_u8YSquare*24){ //If the ball is stuck in the left wall.
-        if(*l_pCurrentSquare->m_pUpWall)
-            l_u8ReturnValue |= UCOLITION;
+    /* Up Walls*/
+    if(l_pCurrentSquare->m_pUpWall){
+        WallToCoord(l_aSquare[0],l_aSquare[1],2, l_aSquareCoord);
+        if(l_aSquareCoord[2] + 5 == i_u8CurrentY)
+            l_u8ReturnValue |= UWALL;
     }
-    else if(l_u8MaxY >= (l_u8YSquare + 1 )*24){
-        if(*l_pCurrentSquare->m_pDownWall)
-            l_u8ReturnValue |= DCOLITION;
-    }
-    //Detect if quantum jump TBD.
-    if(l_u8ReturnValue != 0 &&
-            ((i_u8CurrentX - i_u8NextX != 1 ||
-                    i_u8CurrentX - i_u8NextX != -1) ||
-                    (i_u8CurrentY - i_u8NextY != 1 ||
-                            i_u8CurrentY - i_u8NextY != -1))){
-        l_u8ReturnValue |= QUANTUM;
-    }
+    if(m_SMainBoard[l_aSquare[0]][l_aSquare[1] -1].m_pLeftWall){
+        WallToCoord(l_aSquare[0] ,l_aSquare[1] -1,0, l_aSquareCoord);
+        if(i_u8CurrentX -5 <= l_aSquareCoord[1] && i_u8CurrentY - 5 == l_aSquareCoord[3])
+            l_u8ReturnValue |= UWALL;
 
+    }
+    if(m_SMainBoard[l_aSquare[0]][l_aSquare[1] -1 ].m_pRightWall){
+        WallToCoord(l_aSquare[0] ,l_aSquare[1] + 1 ,1, l_aSquareCoord);
+        if(i_u8CurrentY +5  >= l_aSquareCoord[0] && i_u8CurrentX - 5 == l_aSquareCoord[3])
+            l_u8ReturnValue |= RWALL;
+    }
+    /* Down Walls*/
+    if(l_pCurrentSquare->m_pDownWall){
+        WallToCoord(l_aSquare[0],l_aSquare[1],3, l_aSquareCoord);
+        if(l_aSquareCoord[3] + 5 == i_u8CurrentY)
+            l_u8ReturnValue |= DWALL;
+    }
+    if(m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1].m_pLeftWall){
+        WallToCoord(l_aSquare[0] ,l_aSquare[1] +1 , 0 , l_aSquareCoord);
+        if(i_u8CurrentX -5 <= l_aSquareCoord[1] && i_u8CurrentX + 5 == l_aSquareCoord[3])
+            l_u8ReturnValue |= DWALL;
+
+    }
+    if(m_SMainBoard[l_aSquare[0] - 1][l_aSquare[1] +1 ].m_pRightWall){
+        WallToCoord(l_aSquare[0] -1 ,l_aSquare[1] +1 ,3, l_aSquareCoord);
+        if(i_u8CurrentY +5 >= l_aSquareCoord[0] && i_u8CurrentX + 5 == l_aSquareCoord[3])
+            l_u8ReturnValue |= DWALL;
+    }
     //Hole TBD.
     for(int i = 0; i< m_u8HoleAmmount; i++){
         l_u8XDistance = i_u8CurrentX - m_aHoles[i][0];
@@ -402,6 +443,39 @@ void Maze::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
     }
     //Then draw the circles.
 }
+void Maze::coordToSqueare(uint8_t i_u8XCoord, uint8_t i_u8YCoord, uint8_t * o_pRetCoord){
+
+    o_pRetCoord[0] = (i_u8XCoord -8) / 24; //Whole values.
+    o_pRetCoord[1] = (i_u8YCoord -8) / 24;
+
+}
+void Maze::WallToCoord(uint8_t i_u8XSquare, uint8_t i_u8YSquare, uint8_t i_u8Wall ,uint8_t *o_pRetCoord){
+    switch(i_u8Wall){
+    case 0: //Left Wall
+        o_pRetCoord[0] = 24*i_u8XSquare ;//Xmin
+        o_pRetCoord[1] = 24*i_u8XSquare +6; //Xmax
+        o_pRetCoord[2] = 24*i_u8YSquare; //Ymin
+        o_pRetCoord[2] = 24*(i_u8YSquare +1) + 6 ; //Ymax
+
+    case 1: //Right Wall
+        o_pRetCoord[0] = 24*(i_u8XSquare +1);
+        o_pRetCoord[1] = 24*(i_u8XSquare +1) + 6;
+        o_pRetCoord[2] = 24*i_u8YSquare;
+        o_pRetCoord[3] = 24*(i_u8YSquare+1) + 6 ;
+    case 2: //Up Wall
+        o_pRetCoord[0] = 24*i_u8YSquare ;//Xmin
+        o_pRetCoord[1] = 24*i_u8YSquare +6; //Xmax
+        o_pRetCoord[2] = 24*i_u8XSquare; //Ymin
+        o_pRetCoord[2] = 24*(i_u8XSquare +1) + 6 ; //Ymax
+
+    case 3: //Down Wall
+        o_pRetCoord[0] = 24*(i_u8YSquare+1);
+        o_pRetCoord[1] = 24*(i_u8YSquare+1) +6;
+        o_pRetCoord[2] = 24*i_u8XSquare;
+        o_pRetCoord[3] = 24*(i_u8XSquare+1) + 6;
+    }
+
+}
 void Laberynth::printMaze(){
     m_Maze.printMaze();
 
@@ -416,14 +490,10 @@ void Laberynth::generateLaberynth(void){
     m_Maze.primMaze();
 }
 uint8_t Laberynth::checkColition(uint8_t i_u8CurrentX,
-                                 uint8_t i_u8CurrentY,
-                                 uint8_t i_u8NextX,
-                                 uint8_t i_u8NextY){
+                                 uint8_t i_u8CurrentY){
     uint8_t l_u8ReturnValue;
     l_u8ReturnValue = m_Maze.checkColition(i_u8CurrentX,
-                                 i_u8CurrentY,
-                                 i_u8NextX,
-                                 i_u8NextY);
+                                 i_u8CurrentY);
 
 
     return l_u8ReturnValue;
