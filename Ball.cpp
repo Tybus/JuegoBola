@@ -9,6 +9,8 @@
 
 Ball::Ball(int i_iBallColor, Graphics_Context *context)
 {
+    m_dXSpeed = 0;
+    m_dYSpeed = 0;
     m_iColor=i_iBallColor;
     m_iXPosition = 64;
     m_iYPosition = 64;
@@ -21,6 +23,8 @@ Ball::Ball(int i_iBallColor, Graphics_Context *context)
 
 Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context)
 {
+    m_dXSpeed = 0;
+    m_dYSpeed = 0;
     m_iColor=i_iBallColor;
     m_iXPosition = i_iInitialX;
     m_iYPosition = i_iInitialY;
@@ -33,6 +37,8 @@ Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context 
 
 Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context *context, Laberynth *laberynth)
 {
+    m_dXSpeed = 0;
+    m_dYSpeed = 0;
     m_iColor=i_iBallColor;
     m_iXPosition = i_iInitialX;
     m_iYPosition = i_iInitialY;
@@ -46,6 +52,8 @@ Ball::Ball(int i_iBallColor, int i_iInitialX, int i_iInitialY, Graphics_Context 
 
 Ball::Ball(int i_iBallColor, Graphics_Context *context, Laberynth *laberynth ,int i_iInitialX, int i_iInitialY)
 {
+    m_dXSpeed = 0;
+    m_dYSpeed = 0;
     m_iColor=i_iBallColor;
     m_iXPosition = i_iInitialX;
     m_iYPosition = i_iInitialY;
