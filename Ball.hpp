@@ -42,8 +42,8 @@ class Ball
         int m_iColor;
         //double m_iXAcceleration;
         //double m_iYAcceleration;
-        double m_dXSpeed = 0;
-        double m_dYSpeed = 0;
+        double m_dXSpeed;
+        double m_dYSpeed;
         double m_iXNextPosition;
         double m_iYNextPosition;
         int m_iXInitialPosition;
