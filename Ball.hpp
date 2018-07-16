@@ -48,10 +48,10 @@ class Ball
         double m_iYNextPosition;
         int m_iXInitialPosition;
         int m_iYInitialPosition;
-        bool m_RightWall = false;
-        bool m_LeftWall  = false;
-        bool m_UpWall    = false;
-        bool m_DownWall  = false;
+        bool m_RightWall ;
+        bool m_LeftWall  ;
+        bool m_UpWall    ;
+        bool m_DownWall  ;
 
 
         Graphics_Context * m_pGraphicsContext;
