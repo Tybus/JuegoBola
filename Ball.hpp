@@ -5,13 +5,6 @@
  *      Author: gab
  */
 
-#ifndef XY
-#define XY
-double x;
-double y;
-
-#endif
-
 extern "C"
 {
 //#include <ti/devices/msp432p4xx/inc/msp.h>
@@ -55,6 +48,12 @@ class Ball
         double m_iYNextPosition;
         int m_iXInitialPosition;
         int m_iYInitialPosition;
+        bool m_RightWall = false;
+        bool m_LeftWall  = false;
+        bool m_UpWall    = false;
+        bool m_DownWall  = false;
+
+
         Graphics_Context * m_pGraphicsContext;
         Laberynth * m_pLaberynth;
 
@@ -70,4 +69,5 @@ class Ball
 };
 
 #endif /* BALL_HPP_ */
+
 
