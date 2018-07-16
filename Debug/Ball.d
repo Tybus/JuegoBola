@@ -1,8 +1,8 @@
 # FIXED
 
 Ball.obj: ../Ball.cpp
-Ball.obj: ../Ball.hpp
-Ball.obj: ../LcdDriver/Crystalfontz128x128_ST7735.h
+Ball.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/Ball.hpp
+Ball.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/Crystalfontz128x128_ST7735.h
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h
 Ball.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/driverlib.h
 Ball.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/adc14.h
@@ -46,7 +46,7 @@ Ball.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/ms
 Ball.obj: /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/grlib/grlib.h
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/assert.h
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/linkage.h
-Ball.obj: ../LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h
+Ball.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
@@ -55,8 +55,8 @@ Ball.obj: /home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_E
 Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h
 
 ../Ball.cpp: 
-../Ball.hpp: 
-../LcdDriver/Crystalfontz128x128_ST7735.h: 
+/home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/Ball.hpp: 
+/home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/Crystalfontz128x128_ST7735.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdint.h: 
 /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/driverlib.h: 
 /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/devices/msp432p4xx/driverlib/adc14.h: 
@@ -100,7 +100,7 @@ Ball.obj: /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math
 /home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/grlib/grlib.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/assert.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/linkage.h: 
-../LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h: 
+/home/david/workspace_v7/boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs/LcdDriver/HAL_MSP_EXP432P401R_Crystalfontz128x128_ST7735.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdio.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/stdarg.h: 
 /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/include/math.h: 
