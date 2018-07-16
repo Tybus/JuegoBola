@@ -178,7 +178,7 @@ void Ball::RefreshPhysicalState(double i_dDeltaTime)
        (m_iXNextPosition < m_iXPosition && m_LeftWall))
     {
         m_iXNextPosition =  (double) m_iXPosition;
-        m_dXSpeed = -m_dXSpeed;
+        m_dXSpeed = 0;//-m_dXSpeed;
     }
 
     if((m_iYNextPosition > m_iYPosition && m_DownWall)
@@ -186,7 +186,7 @@ void Ball::RefreshPhysicalState(double i_dDeltaTime)
        (m_iYNextPosition < m_iYPosition && m_UpWall))
     {
         m_iYNextPosition = (double) m_iYPosition;
-        m_dYSpeed = -m_dYSpeed;
+        m_dYSpeed = 0;//-m_dYSpeed;
     }
 
 
