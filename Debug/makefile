@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS
+CG_TOOL_ROOT := /home/gab/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -19,7 +19,7 @@ ORDERED_OBJS += \
 "./ccs/startup_msp432p401r_ccs.obj" \
 "../msp432p401r.cmd" \
 $(GEN_CMDS__FLAG) \
--l"/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/grlib/lib/ccs/m4f/grlib.a" \
+-l"/home/gab/ti/ti/simplelink_msp432p4_sdk_2_20_00_12/source/ti/grlib/lib/ccs/m4f/grlib.a" \
 -l"ti/display/lib/display.aem4f" \
 -l"ti/grlib/lib/ccs/m4f/grlib.a" \
 -l"third_party/spiffs/lib/ccs/m4f/spiffs.a" \
@@ -137,34 +137,34 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.out \
+JuegoBola.out \
 
 EXE_OUTPUTS__QUOTED += \
-"boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.out" \
+"JuegoBola.out" \
 
 BIN_OUTPUTS += \
-boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.hex \
+JuegoBola.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.hex" \
+"JuegoBola.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.out"
+	@$(MAKE) --no-print-directory -Onone "JuegoBola.out"
 
 # Tool invocations
-boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+JuegoBola.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: ARM Linker'
-	"/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none --define=__MSP432P401R__ --define=DeviceFamily_MSP432P401x -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.map" --stack_size=512 -i"/home/david/ti/simplelink_msp432p4_sdk_2_20_00_12/source" -i"/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs_linkInfo.xml" --rom_model -o "boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.out" $(ORDERED_OBJS)
+	"/home/gab/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none --define=__MSP432P401R__ --define=DeviceFamily_MSP432P401x -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"JuegoBola.map" --stack_size=512 -i"/home/gab/ti/ti/simplelink_msp432p4_sdk_2_20_00_12/source" -i"/home/gab/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="JuegoBola_linkInfo.xml" --rom_model -o "JuegoBola.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
-boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.hex: $(EXE_OUTPUTS)
+JuegoBola.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/david/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.6.LTS/bin/armhex"  -o "boostxl_edumkii_lightsensor_msp432p401r_MSP_EXP432P401R_nortos_ccs.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/gab/ti/ccsv8/tools/compiler/ti-cgt-arm_18.1.2.LTS/bin/armhex"  -o "JuegoBola.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
