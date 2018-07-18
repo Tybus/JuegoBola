@@ -126,7 +126,7 @@ void Setup(void)
 
 Laberynth MyLaberynth;
 //Ball ball(__BALL_COLOR ,&g_sContext);
-Ball ball(__BALL_COLOR , 64, 64 ,&g_sContext, &MyLaberynth);
+Ball ball(__BALL_COLOR , 14, 14 ,&g_sContext, &MyLaberynth);
 
 /*
  * Main function

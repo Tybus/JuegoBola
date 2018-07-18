@@ -535,6 +535,14 @@ void Maze::WallToCoord(uint8_t i_u8XSquare, uint8_t i_u8YSquare, uint8_t i_u8Wal
     }
 
 }
+
+uint8_t* Maze::get_m_u8HoleAmmount(void){ return & m_u8HoleAmmount;}
+
+uint8_t* Maze::get_m_u8lvl(void){ return & m_u8lvl;}
+
+uint8_t * Maze::get_m_aHoles(void){ return & m_aHoles[0][0];}
+
+
 void Laberynth::printMaze(){
     m_Maze.printMaze();
 

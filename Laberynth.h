@@ -49,13 +49,18 @@ public:
     void printMaze(void);
     uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY);
     void drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_GContext);
+    uint8_t * get_m_u8HoleAmmount(void);
+    uint8_t * get_m_u8lvl(void);
+    uint8_t * get_m_aHoles(void);
+    uint8_t m_aHoles[127][2];
+
 private:
     void coordToSqueare(uint8_t i_u8XCoord, uint8_t i_u8YCoord, uint8_t * o_pRetCoord);
     void WallToCoord(uint8_t i_u8XSquare, uint8_t i_u8YSquare, uint8_t i_u8Wall ,uint8_t *o_pRetCoord);
     uint8_t m_u8SizeX;
     uint8_t m_u8SizeY;
     Square m_SMainBoard[5][5];
-    uint8_t m_aHoles[127][2];
+    //uint8_t m_aHoles[127][2];
     uint8_t m_u8HoleAmmount;
     uint8_t m_u8lvl;
     uint8_t m_aRectCoords[60][4];
@@ -71,9 +76,10 @@ public:
     uint8_t checkColition(uint8_t i_u8CurrentX,uint8_t i_u8CurrentY);
     void printMaze();
     void drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_GContext);
+    Maze m_Maze;
 private:
     void generateLaberynth(void);
-    Maze m_Maze;
+    //Maze m_Maze;
 
 };
 

@@ -105,22 +105,113 @@ void Ball::Graphics_deleteCircle(Graphics_Context *context,int32_t currentx,int3
 {
     Graphics_setForegroundColor(context, 0x00FFFF00);
     int i; int j;
+    int cantidad = 3;// (int) * m_pLaberynth->m_Maze.get_m_u8HoleAmmount();
+
+    ///////////////////////////
+    ///////////////////////////
+
+    ////////////
 
     for(i=-2;i<3;i+=1)
     {
         for(j=-2 ; j<3; j+=1)
         {
-            if (isOnCircle(currentx+i, currenty+j,  newX,  newY )==0){Graphics_drawPixel(context,currentx+i, currenty+j);}
+            //
+            int h=0;
+
+            uint8_t * m_aHoles =  m_pLaberynth->m_Maze.get_m_aHoles();
+            int currentxx ;
+            int currentyy ;
+            bool l_bPaint = false;
+
+            for(h=0; h<cantidad; h++)
+            {
+                currentxx = (int) m_pLaberynth->m_Maze.m_aHoles[h][0];
+                currentyy = (int) m_pLaberynth->m_Maze.m_aHoles[h][1];
+                l_bPaint = isOnCircle(currentx+i, currenty+j, currentxx, currentyy);
+
+            }
+
+
+            //
+            if (isOnCircle(currentx+i, currenty+j, newX, newY)==0 && ! l_bPaint ){Graphics_drawPixel(context,currentx+i, currenty+j);}
         }
     }
 
     for(i=-1;i<2;i+=1)
     {
-        if (isOnCircle(currentx+i, currenty+3,  newX,  newY )==0){Graphics_drawPixel(context,currentx+i, currenty+3);}
-        if (isOnCircle(currentx+i, currenty-3,  newX,  newY )==0){Graphics_drawPixel(context,currentx+i, currenty-3);}
-        if (isOnCircle(currentx+3, currenty+i,  newX,  newY )==0){Graphics_drawPixel(context,currentx+3, currenty+i);}
-        if (isOnCircle(currentx-3, currenty+i,  newX,  newY )==0){Graphics_drawPixel(context,currentx-3, currenty+i);}
+        int h=0;
+        //int cantidad = (int) * m_pLaberynth->m_Maze.get_m_u8HoleAmmount();
+        uint8_t * m_aHoles =  m_pLaberynth->m_Maze.get_m_aHoles();
+        int currentxx ;
+        int currentyy ;
+        bool l_bPaint = false;
+
+        for(h=0; h<cantidad; h++)
+        {
+            currentxx = (int) m_pLaberynth->m_Maze.m_aHoles[h][0];
+            currentyy = (int) m_pLaberynth->m_Maze.m_aHoles[h][1];
+            l_bPaint = isOnCircle(currentx+i, currenty+3, currentxx, currentyy);
+
+        }
+        if ( (isOnCircle(currentx+i, currenty+3,  newX,  newY )==0) && ! l_bPaint ){Graphics_drawPixel(context,currentx+i, currenty+3);}
+        l_bPaint = false;
+
+        for(h=0; h<cantidad; h++)
+        {
+            currentxx = (int) m_pLaberynth->m_Maze.m_aHoles[h][0];
+            currentyy = (int) m_pLaberynth->m_Maze.m_aHoles[h][1];
+            l_bPaint = isOnCircle(currentx+i, currenty-3, currentxx, currentyy);
+
+        }
+        if ( (isOnCircle(currentx+i, currenty-3,  newX,  newY )==0) && ! l_bPaint ){Graphics_drawPixel(context,currentx+i, currenty-3);}
+        l_bPaint = false;
+
+        for(h=0; h<cantidad; h++)
+        {
+            currentxx = (int) m_pLaberynth->m_Maze.m_aHoles[h][0];
+            currentyy = (int) m_pLaberynth->m_Maze.m_aHoles[h][1];
+            l_bPaint = isOnCircle(currentx+3, currenty+i, currentxx, currentyy);
+
+        }
+        if ( (isOnCircle(currentx+3, currenty+i,  newX,  newY )==0) && ! l_bPaint ){Graphics_drawPixel(context,currentx+3, currenty+i);}
+        l_bPaint = false;
+
+        for(h=0; h<cantidad; h++)
+        {
+            currentxx = (int) m_pLaberynth->m_Maze.m_aHoles[h][0];
+            currentyy = (int) m_pLaberynth->m_Maze.m_aHoles[h][1];
+            l_bPaint = isOnCircle(currentx-3, currenty+i, currentxx, currentyy);
+
+        }
+        if ( (isOnCircle(currentx-3, currenty+i,  newX,  newY )==0) && ! l_bPaint ){Graphics_drawPixel(context,currentx-3, currenty+i);}
     }
+
+
+    /////////////
+
+    Graphics_setForegroundColor(context, 0x000000FF);
+
+    int h=0;
+    //int cantidad = (int) * m_pLaberynth->m_Maze.get_m_u8HoleAmmount();
+
+    uint8_t * m_aHoles =  m_pLaberynth->m_Maze.get_m_aHoles();
+
+    int currentxx ;
+    int currentyy ;
+    for(h=0; h<cantidad; h++)
+    {
+
+    currentxx = (int) * (m_aHoles+h);
+    currentyy = (int) * (m_aHoles+h+1);
+
+    Graphics_fillCircle(m_pGraphicsContext, currentxx, currentyy, 3);
+
+    }
+
+
+
+
 }
 
 void Ball::RefreshPhysicalState(double i_dDeltaTime)
@@ -187,7 +278,12 @@ void Ball::RefreshPhysicalState(double i_dDeltaTime)
         m_dYSpeed = 0;//-m_dYSpeed;
     }
 
-
+    if((bool) (i & HOLE))
+    {
+        ResetBall(14, 14);
+        //(* m_pLaberynth->m_Maze.get_m_u8HoleAmmount())++;
+    }
+                                              //(* m_pLaberynth->m_Maze.get_m_u8lvl())++; }
 /*
     if(m_iXNextPosition >123 || m_iXNextPosition < 4 )
     {
