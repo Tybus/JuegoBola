@@ -58,6 +58,10 @@ private:
     uint8_t m_aHoles[127][2];
     uint8_t m_u8HoleAmmount;
     uint8_t m_u8lvl;
+    uint8_t m_aRectCoords[60][4];
+    uint8_t m_u8NumberOfRects;
+    uint8_t BallTouches(uint8_t i_u8BallX, uint8_t i_u8BallY);
+    uint8_t CheckCorners(uint8_t i_u8BallX, uint8_t i_u8BallY);
 };
 
 class Laberynth{

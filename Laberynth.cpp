@@ -292,7 +292,82 @@ void Maze::primMaze(void){
 
 
     }
+    //Save the rects into coordinates
+    uint8_t l_aCoordinates[4];
+    m_u8NumberOfRects = 0;
+    for(int i = 0; i<5 ;i++){
+        WallToCoord(0,i,0, l_aCoordinates);
+        m_aRectCoords[m_u8NumberOfRects][0] = l_aCoordinates[0];
+        m_aRectCoords[m_u8NumberOfRects][1] = l_aCoordinates[1];
+        m_aRectCoords[m_u8NumberOfRects][2] = l_aCoordinates[2];
+        m_aRectCoords[m_u8NumberOfRects][3] = l_aCoordinates[3];
+        m_u8NumberOfRects++;
+        WallToCoord(i,0,2, l_aCoordinates);
+        m_aRectCoords[m_u8NumberOfRects][0] = l_aCoordinates[0];
+        m_aRectCoords[m_u8NumberOfRects][1] = l_aCoordinates[1];
+        m_aRectCoords[m_u8NumberOfRects][2] = l_aCoordinates[2];
+        m_aRectCoords[m_u8NumberOfRects][3] = l_aCoordinates[3];
+        m_u8NumberOfRects++;
+    }
+    for(int i = 0; i<5; i++){
+        for(int j = 0; j<5; j++){
+            if(*m_SMainBoard[i][j].m_pRightWall == true){
+                WallToCoord(i, j, 1, l_aCoordinates);
+                m_aRectCoords[m_u8NumberOfRects][0] = l_aCoordinates[0];
+                m_aRectCoords[m_u8NumberOfRects][1] = l_aCoordinates[1];
+                m_aRectCoords[m_u8NumberOfRects][2] = l_aCoordinates[2];
+                m_aRectCoords[m_u8NumberOfRects][3] = l_aCoordinates[3];
+                m_u8NumberOfRects++;
+            }
+            if(*m_SMainBoard[i][j].m_pDownWall == true){
+                WallToCoord(i,j,3,l_aCoordinates);
+                m_aRectCoords[m_u8NumberOfRects][0] = l_aCoordinates[0];
+                m_aRectCoords[m_u8NumberOfRects][1] = l_aCoordinates[1];
+                m_aRectCoords[m_u8NumberOfRects][2] = l_aCoordinates[2];
+                m_aRectCoords[m_u8NumberOfRects][3] = l_aCoordinates[3];
+                m_u8NumberOfRects++;
+            }
+        }
+    }
 
+}
+uint8_t Maze::BallTouches(uint8_t i_u8BallX, uint8_t i_u8BallY){
+
+    uint8_t l_u8MinX = i_u8BallX - 4;
+    uint8_t l_u8MaxX = i_u8BallX + 4;
+    uint8_t l_u8MinY = i_u8BallY - 4;
+    uint8_t l_u8MaxY = i_u8BallY + 4;
+    uint8_t l_u8RetVal = 0;
+
+    for(int i = 0; i<m_u8NumberOfRects; i++){
+        if(l_u8MinX == m_aRectCoords[i][1] && // Ball Min is block max
+                i_u8BallY >= m_aRectCoords[i][2] && // Ball Y more than Y min
+                i_u8BallY <= m_aRectCoords[i][3]){ // Ball Y Less tan Y Max
+            l_u8RetVal |= LWALL; //It touches the Down Wall
+        }
+        if(l_u8MaxX == m_aRectCoords[i][0] && // Ball Max is block min
+                i_u8BallY >= m_aRectCoords[i][2] && // Ball Y more than Y min
+                i_u8BallY <= m_aRectCoords[i][3]){ // Ball Y Less tan Y Max
+            l_u8RetVal |= RWALL; //It Touches the Down Wall
+
+        }
+        if(l_u8MinY == m_aRectCoords[i][3] && // Ball Min is block max
+                i_u8BallX >= m_aRectCoords[i][0] && // Ball X more than X min
+                i_u8BallX <= m_aRectCoords[i][1]){ // Ball X Less tan X Max
+            l_u8RetVal |= UWALL;
+        }
+        if(l_u8MaxY == m_aRectCoords[i][2] && // Ball Max is block min
+                i_u8BallX >= m_aRectCoords[i][0] && // Ball X more than X min
+                i_u8BallX <= m_aRectCoords[i][1]){ // Ball X Less tan X Max
+            l_u8RetVal |= DWALL;
+        }
+    }
+    l_u8RetVal |= CheckCorners(i_u8BallX, i_u8BallY);
+    return l_u8RetVal;
+}
+uint8_t Maze::CheckCorners(uint8_t i_u8BallX, uint8_t i_u8BallY){
+    //TBD
+    return 0;
 }
 void Maze::printMaze(){
     printf("\n _ _ _ _ _\n");
@@ -314,126 +389,11 @@ void Maze::printMaze(){
 }
 uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
                                  uint8_t i_u8CurrentY){
-
-    uint8_t l_aSquare[2];
+    uint8_t l_u8XDistance;
+    uint8_t l_u8YDistance;
     uint8_t l_u8ReturnValue = 0;
-    uint8_t l_aSquareCoord[4];
-    int16_t l_u8XDistance = 0;
-    int16_t l_u8YDistance = 0;
 
-    Square *l_pCurrentSquare;
-    //X and Y Should be greater than or equal to 8.
-    coordToSqueare(i_u8CurrentX, i_u8CurrentY, l_aSquare);
-    //Set the max values:
-
-    //load the Square location
-    l_pCurrentSquare = &m_SMainBoard[l_aSquare[0]][l_aSquare[1]];
-
-    /* Left Walls */
-
-    if(*l_pCurrentSquare->m_pLeftWall){
-        WallToCoord(l_aSquare[0],l_aSquare[1],0, l_aSquareCoord);
-        if(l_aSquareCoord[1] + 4 == i_u8CurrentX)
-            l_u8ReturnValue |= LWALL;
-    }
-    if(l_aSquare[0] != 0){
-        if(*m_SMainBoard[l_aSquare[0] - 1][l_aSquare[1]].m_pUpWall){
-            WallToCoord(l_aSquare[0] -1 ,l_aSquare[1] ,2, l_aSquareCoord);
-            if(i_u8CurrentY <= l_aSquareCoord[3] && i_u8CurrentX == l_aSquareCoord[1] + 4 )
-                l_u8ReturnValue |= LWALL;
-
-        }
-
-        if(*m_SMainBoard[l_aSquare[0] - 1][l_aSquare[1]].m_pDownWall){
-            WallToCoord(l_aSquare[0] -1 ,l_aSquare[1] ,3, l_aSquareCoord);
-           if(i_u8CurrentY >= l_aSquareCoord[2] && i_u8CurrentX == l_aSquareCoord[1] + 4)
-                l_u8ReturnValue |= LWALL;
-        }
-    }
-    if(l_aSquare[1] != 4){
-        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1 ].m_pLeftWall){
-            WallToCoord(l_aSquare[0],l_aSquare[1]+1 ,0, l_aSquareCoord);
-            if(i_u8CurrentY >= l_aSquareCoord[2] && i_u8CurrentX == l_aSquareCoord[1] + 4)
-                l_u8ReturnValue |= LWALL;
-        }
-    }
-    /* Right Walls*/
-
-    if(*l_pCurrentSquare->m_pRightWall){
-        WallToCoord(l_aSquare[0],l_aSquare[1],1, l_aSquareCoord);
-        if(l_aSquareCoord[0] - 4 == i_u8CurrentX)
-            l_u8ReturnValue |= RWALL;
-    }
-    if(l_aSquare[0] != 4){
-        if(*m_SMainBoard[l_aSquare[0] +1][l_aSquare[1]].m_pUpWall){
-            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,2, l_aSquareCoord);
-            if(i_u8CurrentY <= l_aSquareCoord[3] && i_u8CurrentX  == l_aSquareCoord[0] - 4)
-                l_u8ReturnValue |= RWALL;
-
-        }
-
-        if(*m_SMainBoard[l_aSquare[0] + 1][l_aSquare[1]].m_pDownWall){
-            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,3, l_aSquareCoord);
-            if(i_u8CurrentY >= l_aSquareCoord[2] && i_u8CurrentX  == l_aSquareCoord[0] - 4)
-                l_u8ReturnValue |= RWALL;
-        }
-
-    }
-
-    /* Up Walls*/
-    if(*l_pCurrentSquare->m_pUpWall){
-        WallToCoord(l_aSquare[0],l_aSquare[1],2, l_aSquareCoord);
-        if(l_aSquareCoord[3] + 4 == i_u8CurrentY)
-            l_u8ReturnValue |= UWALL;
-    }
-    if(l_aSquare[1] != 0){
-        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] - 1].m_pLeftWall){
-            WallToCoord(l_aSquare[0] ,l_aSquare[1] -1,0, l_aSquareCoord);
-            if(i_u8CurrentX  <= l_aSquareCoord[1] && i_u8CurrentY == l_aSquareCoord[3] + 4)
-                l_u8ReturnValue |= UWALL;
-        }
-        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] - 1 ].m_pRightWall){
-            WallToCoord(l_aSquare[0] ,l_aSquare[1] - 1 ,1, l_aSquareCoord);
-            if(i_u8CurrentX >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[3] + 4)
-                l_u8ReturnValue |= UWALL;
-        }
-
-    }
-    if(l_aSquare[0] != 4){
-        if(*m_SMainBoard[l_aSquare[0] +1 ][l_aSquare[1]].m_pUpWall){
-            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1],2, l_aSquareCoord);
-            if(i_u8CurrentX  >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[3] + 4)
-            l_u8ReturnValue |= UWALL;
-        }
-    }
-    /* Down Walls*/
-
-    if(*l_pCurrentSquare->m_pDownWall){
-        WallToCoord(l_aSquare[0],l_aSquare[1],3, l_aSquareCoord);
-        if(l_aSquareCoord[2] - 4 == i_u8CurrentY)
-            l_u8ReturnValue |= DWALL;
-    }
-    if(l_aSquare[1] != 4){
-        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1]  +1].m_pLeftWall){
-            WallToCoord(l_aSquare[0] ,l_aSquare[1] + 1 , 0 , l_aSquareCoord);
-            if(i_u8CurrentX <= l_aSquareCoord[1] && i_u8CurrentY == l_aSquareCoord[2] -4)
-                l_u8ReturnValue |= DWALL;
-
-        }
-        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1 ].m_pRightWall){
-            WallToCoord(l_aSquare[0] ,l_aSquare[1] +1 ,1, l_aSquareCoord);
-            if(i_u8CurrentX >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[2] -4)
-                l_u8ReturnValue |= DWALL;
-        }
-    }
-    if(l_aSquare[0] != 4){
-        if(*m_SMainBoard[l_aSquare[0] +1 ][l_aSquare[1]].m_pDownWall){
-            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1],3, l_aSquareCoord);
-            if(i_u8CurrentX  >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[2] - 4)
-            l_u8ReturnValue |= DWALL;
-        }
-    }
-
+    l_u8ReturnValue |= BallTouches(i_u8CurrentX, i_u8CurrentY);
 
     //Hole TBD.
     for(int i = 0; i< m_u8HoleAmmount; i++){
@@ -551,7 +511,7 @@ void Maze::WallToCoord(uint8_t i_u8XSquare, uint8_t i_u8YSquare, uint8_t i_u8Wal
         o_pRetCoord[0] = 24*i_u8XSquare ;//Xmin
         o_pRetCoord[1] = 24*i_u8XSquare +6; //Xmax
         o_pRetCoord[2] = 24*i_u8YSquare; //Ymin
-        o_pRetCoord[2] = 24*(i_u8YSquare +1) + 6 ; //Ymax
+        o_pRetCoord[3] = 24*(i_u8YSquare +1) + 6 ; //Ymax
         break;
     case 1: //Right Wall
         o_pRetCoord[0] = 24*(i_u8XSquare +1);
