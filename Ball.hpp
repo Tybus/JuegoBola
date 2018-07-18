@@ -40,8 +40,6 @@ class Ball
     protected:
     private:
         int m_iColor;
-        //double m_iXAcceleration;
-        //double m_iYAcceleration;
         double m_dXSpeed;
         double m_dYSpeed;
         double m_iXNextPosition;
@@ -62,7 +60,7 @@ class Ball
                                    int32_t newX,    int32_t newY,
                                    int32_t lRadius);
 
-        int32_t isOnCircle(int32_t xtest, int32_t ytest, int32_t xNew, int32_t yNew );
+        int32_t isOnCircle(int32_t i_i32XTest, int32_t i_i32YTest, int32_t i_i32XCenter, int32_t i_i32YCenter );
 
 
 

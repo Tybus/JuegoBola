@@ -366,8 +366,49 @@ uint8_t Maze::BallTouches(uint8_t i_u8BallX, uint8_t i_u8BallY){
     return l_u8RetVal;
 }
 uint8_t Maze::CheckCorners(uint8_t i_u8BallX, uint8_t i_u8BallY){
-    //TBD
-    return 0;
+    uint8_t l_u8MinX = i_u8BallX - 4;
+    uint8_t l_u8MaxX = i_u8BallX + 4;
+    uint8_t l_u8MinY = i_u8BallY - 4;
+    uint8_t l_u8MaxY = i_u8BallY + 4;
+    uint8_t l_u8TopLeftCorner[2];
+    uint8_t l_u8TopRightCorner[2];
+    uint8_t l_u8BottomLeftCorner[2];
+    uint8_t l_u8BottomRightCorner[2];
+
+    l_u8TopLeftCorner[0] = l_u8MinX -1;
+    l_u8TopLeftCorner[1] = l_u8MinY -1;
+
+    l_u8TopRightCorner[0] = l_u8MaxX +1;
+    l_u8TopRightCorner[1] = l_u8MinY -1;
+
+    l_u8BottomLeftCorner[0] = l_u8MinX -1;
+    l_u8BottomLeftCorner[1] = l_u8MinY +1;
+
+    l_u8BottomRightCorner[0] = l_u8MaxX +1;
+    l_u8BottomRightCorner[1] = l_u8MaxY +1;
+
+    uint8_t l_u8RetVal = 0;
+
+    for(int i = 0;  i< m_u8NumberOfRects; i++){
+        if(l_u8TopLeftCorner[0] == m_aRectCoords[i][1] && //RectX Max
+                l_u8TopLeftCorner[1] == m_aRectCoords[i][2]){ //RectY Min
+            l_u8RetVal |= UWALL | LWALL;
+        }
+        if(l_u8TopRightCorner[0] == m_aRectCoords[i][0] &&// RectX Min
+                l_u8TopRightCorner[1] == m_aRectCoords[i][3]){ //RectY Max
+            l_u8RetVal |= UWALL | RWALL;
+        }
+        if(l_u8BottomLeftCorner[0] == m_aRectCoords[i][1] && //RectX Max
+                l_u8BottomLeftCorner[1] == m_aRectCoords[i][3] ){ //RectY Max
+            l_u8RetVal |= DWALL | LWALL;
+        }
+        if(l_u8BottomRightCorner[0] == m_aRectCoords[i][0] && //RectX Min
+                l_u8BottomRightCorner[1] == m_aRectCoords[i][2] ){ //RectY Min
+            l_u8RetVal |= DWALL | RWALL;
+        }
+
+    }
+    return l_u8RetVal;
 }
 void Maze::printMaze(){
     printf("\n _ _ _ _ _\n");
