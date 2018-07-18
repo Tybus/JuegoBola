@@ -350,6 +350,13 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
                 l_u8ReturnValue |= LWALL;
         }
     }
+    if(l_aSquare[1] != 4){
+        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1 ].m_pLeftWall){
+            WallToCoord(l_aSquare[0],l_aSquare[1]+1 ,0, l_aSquareCoord);
+            if(i_u8CurrentY >= l_aSquareCoord[2] && i_u8CurrentX == l_aSquareCoord[1] + 4)
+                l_u8ReturnValue |= LWALL;
+        }
+    }
     /* Right Walls*/
 
     if(*l_pCurrentSquare->m_pRightWall){
@@ -372,6 +379,7 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
         }
 
     }
+
     /* Up Walls*/
     if(*l_pCurrentSquare->m_pUpWall){
         WallToCoord(l_aSquare[0],l_aSquare[1],2, l_aSquareCoord);
@@ -405,17 +413,18 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
         if(l_aSquareCoord[2] - 4 == i_u8CurrentY)
             l_u8ReturnValue |= DWALL;
     }
+    if(l_aSquare[1] != 4){
+        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1]  +1].m_pLeftWall){
+            WallToCoord(l_aSquare[0] ,l_aSquare[1] + 1 , 0 , l_aSquareCoord);
+            if(i_u8CurrentX <= l_aSquareCoord[1] && i_u8CurrentY == l_aSquareCoord[2] -4)
+                l_u8ReturnValue |= DWALL;
 
-    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1]  +1].m_pLeftWall){
-        WallToCoord(l_aSquare[0] ,l_aSquare[1] + 1 , 0 , l_aSquareCoord);
-        if(i_u8CurrentX <= l_aSquareCoord[1] && i_u8CurrentY == l_aSquareCoord[2] -4)
-            l_u8ReturnValue |= DWALL;
-
-    }
-    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1 ].m_pRightWall){
-        WallToCoord(l_aSquare[0] ,l_aSquare[1] +1 ,1, l_aSquareCoord);
-        if(i_u8CurrentX >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[2] -4)
-            l_u8ReturnValue |= DWALL;
+        }
+        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1 ].m_pRightWall){
+            WallToCoord(l_aSquare[0] ,l_aSquare[1] +1 ,1, l_aSquareCoord);
+            if(i_u8CurrentX >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[2] -4)
+                l_u8ReturnValue |= DWALL;
+        }
     }
     if(l_aSquare[0] != 4){
         if(*m_SMainBoard[l_aSquare[0] +1 ][l_aSquare[1]].m_pDownWall){
@@ -440,10 +449,28 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
                 resetMaze();
                 primMaze();
                 drawLaberynth(__BALL_COLOR, &g_sContext);
+                l_u8ReturnValue |= HOLE;
             }
         }
 
     }
+    //Win condition
+    l_u8XDistance = i_u8CurrentX - (119 - 4);
+    l_u8YDistance = i_u8CurrentY - (119 - 4);
+    l_u8XDistance = abs(l_u8XDistance);
+    l_u8YDistance = abs(l_u8YDistance);
+
+    if(l_u8XDistance <= 3 && l_u8YDistance <= 3){
+        if(sqrt(l_u8XDistance*l_u8XDistance + l_u8YDistance*l_u8YDistance) <= 3 ){
+            /*
+            resetMaze();
+            primMaze();
+            drawLaberynth(__BALL_COLOR, &g_sContext);
+            l_u8ReturnValue |= HOLE;
+            */
+        }
+    }
+
     return l_u8ReturnValue;
 }
 void Maze::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
@@ -509,6 +536,8 @@ void Maze::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
     for(int i = 0; i< m_u8HoleAmmount; i++){
         Graphics_fillCircle(i_pContext, m_aHoles[i][0], m_aHoles[i][1], 3);
     }
+    Graphics_fillCircle(i_pContext, 119-4, 119-4, 3);
+
 }
 void Maze::coordToSqueare(uint8_t i_u8XCoord, uint8_t i_u8YCoord, uint8_t * o_pRetCoord){
 
