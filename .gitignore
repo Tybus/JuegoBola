@@ -1,2 +1,5 @@
 Debug/
-main.cpp~HEAD
+.ccsproject
+.cproject
+.project
+.launches
