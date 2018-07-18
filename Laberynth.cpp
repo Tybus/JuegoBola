@@ -9,9 +9,11 @@
 #include <stdlib.h>
 #include <list>
 #include <stdio.h>
+Graphics_Context g_sContext;
 Maze::Maze(){
     //Set the size variables
     m_u8lvl = 0;
+    m_u8HoleAmmount = m_u8lvl;
     m_u8SizeX = 5;
     m_u8SizeY = 5;
     for(uint8_t l_u8IteratorX = 0; l_u8IteratorX < m_u8SizeX; l_u8IteratorX++){
@@ -142,7 +144,8 @@ void Maze::primMaze(void){
     Square * l_pInSquares[25]; //x,y
     Square * l_pFrontierSquares[25]; //x,y
 
-
+    m_u8lvl++;
+    m_u8HoleAmmount++;
     l_pInSquares[0] = &m_SMainBoard[l_u8RandomX][l_u8RandomY];
     l_pInSquares[0]->m_bInside = true;
     l_u16InSquareAmm++;
@@ -265,6 +268,30 @@ void Maze::primMaze(void){
         printMaze();
     }
     //Generate holes.
+    uint8_t l_u8RandomX2;
+    uint8_t l_u8RandomY2;
+    uint8_t l_u8HoleX;
+    uint8_t l_u8HoleY;
+    uint8_t l_aSquareCoords[4];
+    for(int i = 0; i< m_u8HoleAmmount; i++){
+        l_u8RandomX = rand()%m_u8SizeX; //%5
+        l_u8RandomY = rand()%m_u8SizeY;
+        l_u8RandomX2 = rand()%8 + 12;
+        l_u8RandomY2 = rand()%8 + 12;
+
+        WallToCoord(l_u8RandomX, l_u8RandomY,0, l_aSquareCoords);
+
+        l_u8HoleX = l_aSquareCoords[0] +l_u8RandomX2;
+
+        WallToCoord(l_u8RandomX, l_u8RandomY, 2, l_aSquareCoords);
+
+        l_u8HoleY = l_aSquareCoords[2] + l_u8RandomY2;
+
+        m_aHoles[i][0] = l_u8HoleX;
+        m_aHoles[i][1] = l_u8HoleY;
+
+
+    }
 
 }
 void Maze::printMaze(){
@@ -409,17 +436,26 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
         l_u8YDistance = abs(l_u8YDistance);
 
         if(l_u8XDistance <= 3 && l_u8YDistance <= 3){
-            if(sqrt(l_u8XDistance*l_u8XDistance + l_u8YDistance*l_u8YDistance) <= 3 )
-                l_u8ReturnValue |= HOLE;
+            if(sqrt(l_u8XDistance*l_u8XDistance + l_u8YDistance*l_u8YDistance) <= 3 ){
+                resetMaze();
+                primMaze();
+                drawLaberynth(__BALL_COLOR, &g_sContext);
+            }
         }
 
     }
     return l_u8ReturnValue;
 }
 void Maze::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
-
-    Graphics_setForegroundColor(i_pContext, __BALL_COLOR);
     Graphics_Rectangle l_GraphicsRectangle;
+    Graphics_clearDisplay(i_pContext);
+    Graphics_setForegroundColor(&g_sContext, __FORE_GROUND_COLOR);
+    //Graphics_drawRectangle(&g_sContext,&g_sRectangle);
+    l_GraphicsRectangle.xMax = 0; l_GraphicsRectangle.xMin = 127;
+    l_GraphicsRectangle.yMax = 0; l_GraphicsRectangle.yMin = 127;
+    Graphics_fillRectangle(i_pContext,&l_GraphicsRectangle);
+    Graphics_setForegroundColor(i_pContext, __BALL_COLOR);
+
 
     //First draw the border.
     l_GraphicsRectangle.xMin = 0;
@@ -470,6 +506,9 @@ void Maze::drawLaberynth(int i_iLaberynthColor, Graphics_Context *i_pContext){
         }
     }
     //Then draw the circles.
+    for(int i = 0; i< m_u8HoleAmmount; i++){
+        Graphics_fillCircle(i_pContext, m_aHoles[i][0], m_aHoles[i][1], 3);
+    }
 }
 void Maze::coordToSqueare(uint8_t i_u8XCoord, uint8_t i_u8YCoord, uint8_t * o_pRetCoord){
 
