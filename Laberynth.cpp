@@ -330,38 +330,47 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
         if(l_aSquareCoord[0] - 4 == i_u8CurrentX)
             l_u8ReturnValue |= RWALL;
     }
-    /*
-    if(*m_SMainBoard[l_aSquare[0] +1][l_aSquare[1]].m_pUpWall){
-        WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,2, l_aSquareCoord);
-        if(i_u8CurrentY -5 <= l_aSquareCoord[3] && i_u8CurrentX - 5 == l_aSquareCoord[0])
-            l_u8ReturnValue |= RWALL;
+    if(l_aSquare[0] != 4){
+        if(*m_SMainBoard[l_aSquare[0] +1][l_aSquare[1]].m_pUpWall){
+            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,2, l_aSquareCoord);
+            if(i_u8CurrentY <= l_aSquareCoord[3] && i_u8CurrentX  == l_aSquareCoord[0] - 4)
+                l_u8ReturnValue |= RWALL;
+
+        }
+
+        if(*m_SMainBoard[l_aSquare[0] + 1][l_aSquare[1]].m_pDownWall){
+            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,3, l_aSquareCoord);
+            if(i_u8CurrentY >= l_aSquareCoord[2] && i_u8CurrentX  == l_aSquareCoord[0] - 4)
+                l_u8ReturnValue |= RWALL;
+        }
 
     }
-    if(*m_SMainBoard[l_aSquare[0] + 1][l_aSquare[1]].m_pDownWall){
-        WallToCoord(l_aSquare[0] +1 ,l_aSquare[1] ,3, l_aSquareCoord);
-        if(i_u8CurrentY +5 >= l_aSquareCoord[2] && i_u8CurrentX - 5 == l_aSquareCoord[0])
-            l_u8ReturnValue |= RWALL;
-    }
-     */
     /* Up Walls*/
     if(*l_pCurrentSquare->m_pUpWall){
         WallToCoord(l_aSquare[0],l_aSquare[1],2, l_aSquareCoord);
         if(l_aSquareCoord[3] + 4 == i_u8CurrentY)
             l_u8ReturnValue |= UWALL;
     }
-    /*
-    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] -1].m_pLeftWall){
-        WallToCoord(l_aSquare[0] ,l_aSquare[1] -1,0, l_aSquareCoord);
-        if(i_u8CurrentX -5 <= l_aSquareCoord[1] && i_u8CurrentY - 5 == l_aSquareCoord[3])
-            l_u8ReturnValue |= UWALL;
+    if(l_aSquare[1] != 0){
+        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] - 1].m_pLeftWall){
+            WallToCoord(l_aSquare[0] ,l_aSquare[1] -1,0, l_aSquareCoord);
+            if(i_u8CurrentX  <= l_aSquareCoord[1] && i_u8CurrentY == l_aSquareCoord[3] + 4)
+                l_u8ReturnValue |= UWALL;
+        }
+        if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] - 1 ].m_pRightWall){
+            WallToCoord(l_aSquare[0] ,l_aSquare[1] - 1 ,1, l_aSquareCoord);
+            if(i_u8CurrentX >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[3] + 4)
+                l_u8ReturnValue |= UWALL;
+        }
 
     }
-    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] -1 ].m_pRightWall){
-        WallToCoord(l_aSquare[0] ,l_aSquare[1] + 1 ,1, l_aSquareCoord);
-        if(i_u8CurrentY +5  >= l_aSquareCoord[0] && i_u8CurrentX - 5 == l_aSquareCoord[3])
-            l_u8ReturnValue |= RWALL;
+    if(l_aSquare[0] != 4){
+        if(*m_SMainBoard[l_aSquare[0] +1 ][l_aSquare[1]].m_pUpWall){
+            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1],2, l_aSquareCoord);
+            if(i_u8CurrentX  >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[3] + 4)
+            l_u8ReturnValue |= UWALL;
+        }
     }
-    */
     /* Down Walls*/
 
     if(*l_pCurrentSquare->m_pDownWall){
@@ -369,19 +378,27 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
         if(l_aSquareCoord[2] - 4 == i_u8CurrentY)
             l_u8ReturnValue |= DWALL;
     }
-    /*
-    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1].m_pLeftWall){
-        WallToCoord(l_aSquare[0] ,l_aSquare[1] +1 , 0 , l_aSquareCoord);
-        if(i_u8CurrentX -5 <= l_aSquareCoord[1] && i_u8CurrentX + 5 == l_aSquareCoord[3])
+
+    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1]  +1].m_pLeftWall){
+        WallToCoord(l_aSquare[0] ,l_aSquare[1] + 1 , 0 , l_aSquareCoord);
+        if(i_u8CurrentX <= l_aSquareCoord[1] && i_u8CurrentY == l_aSquareCoord[2] -4)
             l_u8ReturnValue |= DWALL;
 
     }
-    if(*m_SMainBoard[l_aSquare[0] - 1][l_aSquare[1] +1 ].m_pRightWall){
-        WallToCoord(l_aSquare[0] -1 ,l_aSquare[1] +1 ,3, l_aSquareCoord);
-        if(i_u8CurrentY +5 >= l_aSquareCoord[0] && i_u8CurrentX + 5 == l_aSquareCoord[3])
+    if(*m_SMainBoard[l_aSquare[0]][l_aSquare[1] +1 ].m_pRightWall){
+        WallToCoord(l_aSquare[0] ,l_aSquare[1] +1 ,1, l_aSquareCoord);
+        if(i_u8CurrentX >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[2] -4)
             l_u8ReturnValue |= DWALL;
     }
-    */
+    if(l_aSquare[0] != 4){
+        if(*m_SMainBoard[l_aSquare[0] +1 ][l_aSquare[1]].m_pDownWall){
+            WallToCoord(l_aSquare[0] +1 ,l_aSquare[1],3, l_aSquareCoord);
+            if(i_u8CurrentX  >= l_aSquareCoord[0] && i_u8CurrentY == l_aSquareCoord[2] - 4)
+            l_u8ReturnValue |= DWALL;
+        }
+    }
+
+
     //Hole TBD.
     for(int i = 0; i< m_u8HoleAmmount; i++){
         l_u8XDistance = i_u8CurrentX - m_aHoles[i][0];
