@@ -97,6 +97,8 @@ void Ball::ResetBall(int i_iResetX, int i_iResetY)
     m_dYSpeed = 0;
     m_iXNextPosition = i_iResetX;
     m_iYNextPosition = i_iResetY;
+    m_iXPosition= m_iXNextPosition;
+    m_iYPosition= m_iYNextPosition;
 }
 
 void Ball::Graphics_deleteCircle(Graphics_Context *context,int32_t i_iCurrentX,int32_t i_iCurrentY,
@@ -254,6 +256,7 @@ void Ball::RefreshPhysicalState(double i_dDeltaTime)
     if((bool) (i & HOLE))
     {
         ResetBall(14, 14);
+        //RefreshOnScreen();
     }
 
 }

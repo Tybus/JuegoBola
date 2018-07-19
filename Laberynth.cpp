@@ -366,6 +366,7 @@ uint8_t Maze::BallTouches(uint8_t i_u8BallX, uint8_t i_u8BallY){
     return l_u8RetVal;
 }
 uint8_t Maze::CheckCorners(uint8_t i_u8BallX, uint8_t i_u8BallY){
+    /*
     uint8_t l_u8MinX = i_u8BallX - 4;
     uint8_t l_u8MaxX = i_u8BallX + 4;
     uint8_t l_u8MinY = i_u8BallY - 4;
@@ -408,7 +409,10 @@ uint8_t Maze::CheckCorners(uint8_t i_u8BallX, uint8_t i_u8BallY){
         }
 
     }
+
     return l_u8RetVal;
+    */
+    return 0;
 }
 void Maze::printMaze(){
     printf("\n _ _ _ _ _\n");
@@ -447,9 +451,9 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
 
         if(l_u8XDistance <= 3 && l_u8YDistance <= 3){
             if(sqrt(l_u8XDistance*l_u8XDistance + l_u8YDistance*l_u8YDistance) <= 3 ){
-                resetMaze();
-                primMaze();
-                drawLaberynth(__BALL_COLOR, &g_sContext);
+                //resetMaze();
+                //primMaze();
+                //drawLaberynth(__BALL_COLOR, &g_sContext);
                 l_u8ReturnValue |= HOLE;
             }
         }
@@ -463,12 +467,11 @@ uint8_t Maze::checkColition(uint8_t i_u8CurrentX,
 
     if(l_u8XDistance <= 3 && l_u8YDistance <= 3){
         if(sqrt(l_u8XDistance*l_u8XDistance + l_u8YDistance*l_u8YDistance) <= 3 ){
-            /*
+
             resetMaze();
             primMaze();
             drawLaberynth(__BALL_COLOR, &g_sContext);
             l_u8ReturnValue |= HOLE;
-            */
         }
     }
 
